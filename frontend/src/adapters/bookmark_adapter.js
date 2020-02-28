@@ -19,7 +19,14 @@ class BookmarksAdapter {
         );
     }
 
-    static deleteBookmark(bookmark) {
-
+    static deleteBookmark(bookmark, callback) {
+        let options = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          }
+        }
+        fetch(`http://localhost:3000/bookmarks/${bookmark.id}`, options).then(callback());
     }
 }

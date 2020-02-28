@@ -4,6 +4,10 @@ class BookmarksController < ApplicationController
     render json: BookmarkSerializer.json(bookmark)
   end
 
+  def destroy 
+    bookmark = Bookmark.find(params[:id]).delete
+  end
+
   private
   def bookmark_params
     params.require(:bookmark).permit(:bookmark_module_id, :name, :url)

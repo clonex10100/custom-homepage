@@ -25,7 +25,7 @@ class BookmarkModule extends Module {
     getFooterHTML() {
         let footer = document.createElement('footer');
         let addButton = document.createElement('button')
-        addButton.textContent = 'Add New Bookmarks';
+        addButton.textContent = 'Add Or Remove Bookmarks';
         addButton.addEventListener('click', this.renderNewBookmarksForm.bind(this))
         footer.appendChild(addButton);
         return footer;
@@ -62,10 +62,11 @@ class BookmarkModule extends Module {
         
         //Button to 'unrender' the form
         let exit = document.createElement('button');
-        exit.textContent = 'Finished Adding';
+        exit.textContent = 'Finished Editing';
         form.appendChild(exit);
         exit.onclick = e => {
             e.preventDefault()
+            this.bookmarks.forEach(bookmark => bookmark.unRenderDeleteButton());
             this.div.querySelector('footer').remove()
             this.div.appendChild(this.getFooterHTML());
         }
@@ -97,7 +98,7 @@ class BookmarkModule extends Module {
         //Replace it's contents with the bookmark form
         destroyAllChildren(section);
         let form = this.getBookmarkFormHTML();
-        
+        this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton()); 
          
         section.appendChild(form);
 

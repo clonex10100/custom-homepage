@@ -22,16 +22,28 @@ class Bookmark {
         a.href = this.url;
         li.appendChild(a);
 
-        let deleteButton = document.createElement('button');
-        deleteButton.textContent = 'delete';
-        deleteButton.onclick = e => {
-            this.li.destroy();
-        };
-        li.appendChild(deleteButton);
         return li;
     }
 
     render() {
-        this.module.div.querySelector('.bookmarks-list').appendChild(this.getHTML());
+        this.li = this.getHTML();
+        this.module.div.querySelector('.bookmarks-list').appendChild(this.li);
+    }
+
+    renderDeleteButton() {
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = 'delete';
+        deleteButton.onclick = e => {
+            BookmarksAdapter.deleteBookmark(this, this.destroy.bind(this));
+        };
+       this.li.appendChild(deleteButton); 
+    }
+
+    unRenderDeleteButton() {
+        this.li.querySelector('button').remove();
+    }
+
+    destroy() {
+        this.li.remove();
     }
 }
