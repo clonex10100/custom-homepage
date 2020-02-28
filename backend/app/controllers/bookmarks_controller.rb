@@ -1,6 +1,7 @@
 class BookmarksController < ApplicationController
   def create
-    Bookmark.create(bookmark_params)
+    bookmark = Bookmark.create(bookmark_params)
+    render json: BookmarkSerializer.json(bookmark)
   end
 
   private

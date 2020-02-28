@@ -1,35 +1,24 @@
 //TODO, add delete bookmarks
 class BookmarkModule extends Module {
-    constructor(name, bookmarks, id) {
+    constructor(name, bookmarks_data, id) {
         super(name);
-        this.bookmarks = bookmarks;
+        this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.link, this, bookmark_hash.id));
         this.id = id;
     }
 
-    //Add a bookmark to bookmarks and add the html.
-    addBookmark(bookmark) {
-        let bookmarks_list = this.div.querySelector('.bookmarks-list')
-        let li = document.createElement('li');
-        li.appendChild(bookmark.getHTML());
-        bookmarks_list.appendChild(li); 
+    render() {
+        super.render()
+        for(let bookmark of this.bookmarks) {
+            bookmark.render();
+        }
     }
 
     //Next Two Methods are for generating the base HTML. They're called by Module.render().
     getContentHTML() {
         let section = document.createElement('section');
         let bookmarks_list = document.createElement('ul');
-        bookmarks_list.classList.add("bookmarks-list");
-        let li;
-
-        for(let bookmark of this.bookmarks) {
-            li = document.createElement('li');
-            li.appendChild(bookmark.getHTML());
-            bookmarks_list.appendChild(li);
-        }
+        bookmarks_list.classList.add('bookmarks-list');
         section.appendChild(bookmarks_list);
-
-
-
         return section;
     }
 
@@ -87,9 +76,12 @@ class BookmarkModule extends Module {
             e.preventDefault();
 
             //create and save the bookmark to database
-            let bookmark = new Bookmark(bookmarkNameField.value, bookmarkURLField.value, this.id);
+            let bookmark = new Bookmark(bookmarkNameField.value, bookmarkURLField.value, this);
             bookmark.save()
-            this.addBookmark(bookmark);
+            bookmarkNameField.value = '';
+            bookmarkURLField.value = '';
+
+            this.bookmarks.push(bookmark);
         });
 
         return form;
@@ -100,12 +92,12 @@ class BookmarkModule extends Module {
     //Callback for the 'add new bookmark' button in footer, renders the bookmark creation form
     //'this' needs to be bound
     renderNewBookmarksForm(e) {
-        console.log(this);
         //Get the footer section of the module
         let section = e.target.parentElement;
         //Replace it's contents with the bookmark form
         destroyAllChildren(section);
         let form = this.getBookmarkFormHTML();
+        
          
         section.appendChild(form);
 
