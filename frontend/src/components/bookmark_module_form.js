@@ -1,0 +1,3 @@
+class BookmarkModuleForm extends ModuleForm {
+
+}
