@@ -1,15 +1,31 @@
-<html>
+<html lang="en">
     <head>
-        <title>Custom Homepage</title>
-        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <title>Custom Homepagge</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" tydive="text/css" href="stylesheet.css">
     </head>
     <body>
-        <header>
-            <h1>Your Custom Homepage</h1>
-        </header>
-
-        <div class="category-container">
+        <div class="menu">
+            <header>
+                <h1>Your Custom Homepage</h1>
+            </header>
+            <form id="new-module-form">
+                <h3>Create a new Module</h3>
+                <label>Name</label>
+                <input type="text">
+                <label>Content</label>
+                <input type="text">
+                <input type="submit">
+            </form>
+        </div>
+        <div id="module-container" class="clearfix">
         </div>
     </body>
+    <script src="src/helpers.js"></script>
+
+    <script src="src/adapters/bookmark_adapter.js"></script>
+    <script src="src/components/module.js"></script>
+    <script src="src/components/bookmark.js"></script>
+    <script src="src/components/bookmark_module.js"></script>
     <script src="src/index.js"></script>
 </html>
