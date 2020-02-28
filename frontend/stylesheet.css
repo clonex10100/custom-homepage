@@ -39,3 +39,7 @@ div.module {
 hr {
     color: black;
 }
+
+li {
+    list-style: none;
+}

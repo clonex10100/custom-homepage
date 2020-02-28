@@ -1,9 +1,8 @@
 //TODO, add delete bookmarks
 class BookmarkModule extends Module {
-    constructor(name, bookmarks_data, id) {
-        super(name);
+    constructor(name, id, bookmarks_data=[]) {
+        super(name, id);
         this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.link, this, bookmark_hash.id));
-        this.id = id;
     }
 
     render() {
@@ -11,6 +10,13 @@ class BookmarkModule extends Module {
         for(let bookmark of this.bookmarks) {
             bookmark.render();
         }
+    }
+    
+    save() {
+        BookmarkModuleAdapter.postBookmarkModule(this, e => {
+            this.id = e.id;
+            this.render()
+        });
     }
 
     //Next Two Methods are for generating the base HTML. They're called by Module.render().

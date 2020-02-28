@@ -1,7 +1,7 @@
 class Module {
-    constructor(name) {
+    constructor(name, id) {
         this.name = name;
-        this.content = content;
+        this.id = id;
         this.container = document.getElementById('module-container')
     }
 
