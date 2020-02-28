@@ -17,6 +17,7 @@ class Module {
     }
     
 
+    //Every module has 3 components, a header, content, and footer. This method puts them all together.
     getHTML() {
         let div = document.createElement('div');
         div.classList.add('module');
@@ -34,9 +35,31 @@ class Module {
         return div;
     }
 
+    //generates the modules html and adds it to the page, should only be called once
     render() {
-        this.div = this.getHTML();
-        this.rendered = true
-        this.container.appendChild(this.div);
+        if(!this.rendered) {
+            this.div = this.getHTML();
+            this.rendered = true
+            this.container.appendChild(this.div);
+        } else {
+            throw 'Module should not be rendered twice'
+        }
+    }
+
+    //TODO, add real name editing functionality, this code is broken
+    getnameFormHTML() {
+        let form = document.createElement('form');
+
+        let nameLabel = document.createElement('label');
+        nameLabel.name = 'name';
+        nameLabel.innerText = 'Name: ';
+        form.appendChild(nameLabel);
+
+        let nameField = document.createElement('input');
+        nameField.name = 'name';
+        nameField.value = this.name;
+        form.appendChild(nameField);
+
+        return form;
     }
 }
