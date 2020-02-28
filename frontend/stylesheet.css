@@ -1,0 +1,10 @@
+header {
+    margin: auto;
+    padding: 0.1em;
+    width: 50%;
+    float: center;
+    border-radius: 20px;
+    text-align: center;
+    border-color: black;
+    background: pink;
+}
