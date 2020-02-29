@@ -85,6 +85,7 @@ class BookmarkModule extends Module {
             //create and save the bookmark to database
             let bookmark = new Bookmark(bookmarkNameField.value, bookmarkURLField.value, this);
             bookmark.save()
+
             bookmarkNameField.value = '';
             bookmarkURLField.value = '';
 

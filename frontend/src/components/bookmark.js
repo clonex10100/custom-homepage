@@ -11,6 +11,7 @@ class Bookmark {
         BookmarksAdapter.postBookmark(this, json => {
             this.id = json.id;
             this.render()
+            this.renderDeleteButton();
         });
     }
 
