@@ -7,10 +7,10 @@ class Module {
 
     //Decendents should probably not overwrite
     getHeaderHTML() {
-        let header = document.createElement('header');
 
+        let header = document.createElement('header');
         let title = document.createElement('h3');
-        title.classList.add('module-title');
+        title.classList.add('module-name');
         title.innerText = this.name;
         header.appendChild(title);
 
@@ -64,14 +64,52 @@ class Module {
         }
     }
 
+    updateName(e) {
+        e.preventDefault()
+        this.name = e.target.querySelector('.name-field').value;
+    }
+
+    getNameFormHTML() {
+        let form = document.createElement('form');
+        form.classList.add('name-form');
+
+        let nameField = document.createElement('input');
+        nameField.type = 'text';
+        nameField.classList.add('name-field');
+        nameField.value = this.name;
+
+        form.appendChild(nameField);
+
+        form.appendChild(document.createElement('br'));
+
+        let submit = document.createElement('input');
+        submit.type = 'submit';
+        submit.value = 'Update Name';
+
+        form.addEventListener('submit', this.updateName.bind(this));
+        form.appendChild(submit);
+
+        return form;
+    }
+
     renderEdit(e) {
         e.preventDefault();
+
+        //Add form to update name
+        this.div.querySelector('.module-name').remove()
+
+        this.div.querySelector('header').appendChild(this.getNameFormHTML());
+
+        //change edit button to done editing button
         this.editButton.textContent = 'Finished Editing';
         this.editButton.onclick = this.derenderEdit.bind(this);
     }
     
     derenderEdit(e) {
         e.preventDefault()
+        this.div.querySelector('header').remove();
+        this.div.prepend(this.getHeaderHTML());
+
         this.editButton.textContent = 'Edit Module';
         this.editButton.onclick = this.renderEdit.bind(this);
     }
