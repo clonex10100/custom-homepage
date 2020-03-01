@@ -11,10 +11,18 @@ class BookmarkModuleAdapter {
               homepage_id: 1
           })
         }
-            resp => resp.json()
         fetch("http://localhost:3000/homepages/1/bookmark_modules", options).then(
+            resp => {
+                if (resp.ok) {
+                    return resp.json()
+                } else{
+                    throw 'POST failed';
+                }
+            }
         ).then(
             json => callback(json)
+        ).catch(
+            x => console.log('Post request for bookmark module failed')
         );
     }
 }
