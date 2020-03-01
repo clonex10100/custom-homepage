@@ -32,10 +32,33 @@ div.module {
     border-color: #93a1a1;
     border-radius: 10px 10px 0px 0px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 
     box-shadow: 5px 5px 20px;
 }
 
+div.module footer {
+    flex: 0 0 3em;
+}
+
+div.module footer button {
+    margin: 0.5em;
+}
+
+div.module .module-content {
+    flex: 1 1 auto;
+}
+
+div.module header {
+    flex: 0 0 3em;
+}
+/* hr breaks in flexbox without this styling */
+div.module hr {
+    margin: 0px;
+  margin-left: 0;
+  margin-right: 0;
+}
 .module-title {
     text-align: center;
     margin: 0.7em auto;

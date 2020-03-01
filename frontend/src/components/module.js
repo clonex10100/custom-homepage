@@ -19,9 +19,9 @@ class Module {
     
     //Should Always Be Overwritten by decendents
     getContentHTML() {
-        let p = document.createElement('p') 
-        p.innerText = "This is a blank module with no content";
-        return p; 
+        let div = document.createElement('section') 
+        div.classList.add('module-content');
+        return div; 
     }
 
     //Decendents should probably not overwrite
@@ -79,8 +79,6 @@ class Module {
         nameField.value = this.name;
 
         form.appendChild(nameField);
-
-        form.appendChild(document.createElement('br'));
 
         let submit = document.createElement('input');
         submit.type = 'submit';

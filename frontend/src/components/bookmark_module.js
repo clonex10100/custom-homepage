@@ -15,7 +15,7 @@ class BookmarkModule extends Module {
 
     //Next Two Methods are for generating the base HTML. They're called by Module.render().
     getContentHTML() {
-        let section = document.createElement('section');
+        let section = super.getContentHTML();
         let bookmarks_list = document.createElement('ul');
         bookmarks_list.classList.add('bookmarks-list');
         section.appendChild(bookmarks_list);
