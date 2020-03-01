@@ -5,12 +5,6 @@ class BookmarkModule extends Module {
         this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.url, this, bookmark_hash.id));
     }
 
-    render() {
-        super.render()
-        for(let bookmark of this.bookmarks) {
-            bookmark.render();
-        }
-    }
     
     save() {
         BookmarkModuleAdapter.postBookmarkModule(this, e => {
@@ -28,16 +22,16 @@ class BookmarkModule extends Module {
         return section;
     }
 
-    getFooterHTML() {
-        let footer = document.createElement('footer');
-        let addButton = document.createElement('button')
-        addButton.textContent = 'Add Or Remove Bookmarks';
-        addButton.addEventListener('click', this.renderNewBookmarksForm.bind(this))
-        footer.appendChild(addButton);
-        return footer;
+    //Renders the element, should only be called once
+    render() {
+        //this renders the html redurned by getContentHTML
+        super.render()
+        for(let bookmark of this.bookmarks) {
+            bookmark.render();
+        }
     }
 
-    //Generate html form for adding bookmarks NOT rendered when render is called
+    //Generate html form for adding bookmarks
     getBookmarkFormHTML() {
         let form = document.createElement('form');
 
@@ -67,15 +61,6 @@ class BookmarkModule extends Module {
         form.appendChild(submit);
         
         //Button to 'unrender' the form
-        let exit = document.createElement('button');
-        exit.textContent = 'Finished Editing';
-        form.appendChild(exit);
-        exit.onclick = e => {
-            e.preventDefault()
-            this.bookmarks.forEach(bookmark => bookmark.unRenderDeleteButton());
-            this.div.querySelector('footer').remove()
-            this.div.appendChild(this.getFooterHTML());
-        }
         
         //Form Submit Callback
         form.addEventListener('submit', e => {
@@ -99,16 +84,16 @@ class BookmarkModule extends Module {
     
     //Callback for the 'add new bookmark' button in footer, renders the bookmark creation form
     //'this' needs to be bound
-    renderNewBookmarksForm(e) {
-        //Get the footer section of the module
-        let section = e.target.parentElement;
-        //Replace it's contents with the bookmark form
-        destroyAllChildren(section);
+    renderEdit(e) {
+        super.renderEdit(e);
         let form = this.getBookmarkFormHTML();
         this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton()); 
-         
-        section.appendChild(form);
+        this.div.append(form)     
+    }
 
-        
+    derenderEdit(e) {
+        super.derenderEdit(e);
+        this.bookmarks.forEach(bookmark => bookmark.unRenderDeleteButton());
+        this.div.querySelector('form').remove()
     }
 }

@@ -5,6 +5,7 @@ class Module {
         this.container = document.getElementById('module-container')
     }
 
+    //Decendents should probably not overwrite
     getHeaderHTML() {
         let header = document.createElement('header');
 
@@ -15,6 +16,23 @@ class Module {
 
         return header;
     }
+    
+    //Should Always Be Overwritten by decendents
+    getContentHTML() {
+        let p = document.createElement('p') 
+        p.innerText = "This is a blank module with no content";
+        return p; 
+    }
+
+    //Decendents should probably not overwrite
+    getFooterHTML() {
+        let footer = document.createElement('footer');
+        this.editButton = document.createElement('button')
+        this.editButton.textContent = 'Edit Module';
+        this.editButton.onclick = this.renderEdit.bind(this);
+        footer.appendChild(this.editButton);
+        return footer;
+    };
     
 
     //Every module has 3 components, a header, content, and footer. This method puts them all together.
@@ -44,6 +62,18 @@ class Module {
         } else {
             throw 'Module should not be rendered twice'
         }
+    }
+
+    renderEdit(e) {
+        e.preventDefault();
+        this.editButton.textContent = 'Finished Editing';
+        this.editButton.onclick = this.derenderEdit.bind(this);
+    }
+    
+    derenderEdit(e) {
+        e.preventDefault()
+        this.editButton.textContent = 'Edit Module';
+        this.editButton.onclick = this.renderEdit.bind(this);
     }
 
     //TODO, add real name editing functionality, this code is broken
