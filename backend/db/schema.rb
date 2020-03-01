@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_29_211657) do
+ActiveRecord::Schema.define(version: 2020_03_01_082000) do
 
   create_table "bookmark_modules", force: :cascade do |t|
     t.string "name"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 2020_02_29_211657) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "note_modules", force: :cascade do |t|
+    t.string "name"
+    t.string "content"
+    t.integer "homepage_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["homepage_id"], name: "index_note_modules_on_homepage_id"
+  end
+
   add_foreign_key "bookmark_modules", "homepages"
   add_foreign_key "bookmarks", "bookmark_modules"
+  add_foreign_key "note_modules", "homepages"
 end

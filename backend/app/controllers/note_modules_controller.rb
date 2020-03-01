@@ -1,0 +1,2 @@
+class NoteModulesController < ApplicationController
+end
