@@ -2,7 +2,7 @@
 class BookmarkModule extends Module {
     constructor(name, id, bookmarks_data=[]) {
         super(name, id);
-        this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.link, this, bookmark_hash.id));
+        this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.url, this, bookmark_hash.id));
     }
 
     render() {

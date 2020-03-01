@@ -8,10 +8,11 @@ class BookmarkModuleAdapter {
           },
           body: JSON.stringify({
               name: bookmark_module.name,
+              homepage_id: 1
           })
         }
-        fetch("http://localhost:3000/bookmark_modules", options).then(
             resp => resp.json()
+        fetch("http://localhost:3000/homepages/1/bookmark_modules", options).then(
         ).then(
             json => callback(json)
         );
