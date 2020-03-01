@@ -3,12 +3,15 @@ header {
 }
 
 .menu {
-    width: 75%;
+    width: 73%;
     border-radius: 20px;
     margin: auto;
     border-color: black;
-    background: pink;
+    border: solid;
+    border-color: #93a1a1;
+    background: #fdf6e3;
     text-align: center;
+    box-shadow: 5px 5px 20px;
 }
 
 div#module-container {
@@ -29,6 +32,8 @@ div.module {
     border-color: #93a1a1;
     border-radius: 10px 10px 0px 0px;
     text-align: center;
+
+    box-shadow: 5px 5px 20px;
 }
 
 .module-title {
