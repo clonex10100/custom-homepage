@@ -35,6 +35,8 @@ class BookmarkModule extends Module {
     getBookmarkFormHTML() {
         let form = document.createElement('form');
 
+        form.appendChild(document.createElement('hr'));
+
         let bookmarkNameLabel = document.createElement('label')
         bookmarkNameLabel.textContent = 'Bookmark Name: ';
         form.appendChild(bookmarkNameLabel);

@@ -13,6 +13,15 @@ class BookmarkModulesController < ApplicationController
     end
   end
 
+  def update
+    bookmark_module = BookmarkModule.find(params[:id])
+    if bookmark_module.update(name: params[:name]);
+      render json: BookmarkModuleSerializer.json(bookmark_module) 
+    else
+      render json: { :errors => bookmark_module.errors.full_messages }, :status => 422
+    end
+  end
+
   private
   def bookmark_module_params
     params.require(:bookmark_module).permit(:name, :homepage_id)

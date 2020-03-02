@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :homepages, only: [:show, :create] do
-    resources :bookmark_modules, only: [:index, :create]
+    resources :bookmark_modules, only: [:index, :create, :update]
     resources :note_modules, only: [:index, :create]
   end
   resources :bookmarks, only: [:create, :destroy]

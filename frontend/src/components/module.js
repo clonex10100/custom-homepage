@@ -16,12 +16,12 @@ class Module {
 
         return header;
     }
-    
+
     //Should Always Be Overwritten by decendents
     getContentHTML() {
-        let div = document.createElement('section') 
+        let div = document.createElement('section')
         div.classList.add('module-content');
-        return div; 
+        return div;
     }
 
     //Decendents should probably not overwrite
@@ -33,13 +33,13 @@ class Module {
         footer.appendChild(this.editButton);
         return footer;
     };
-    
+
 
     //Every module has 3 components, a header, content, and footer. This method puts them all together.
     getHTML() {
         let div = document.createElement('div');
         div.classList.add('module');
-        
+
         div.appendChild(this.getHeaderHTML());
 
         div.appendChild(document.createElement('hr'));
@@ -66,7 +66,8 @@ class Module {
 
     updateName(e) {
         e.preventDefault()
-        this.name = e.target.querySelector('.name-field').value;
+        this.name = this.div.querySelector('.name-field').value;
+        BookmarkModuleAdapter.updateBookmarkModule(this);
     }
 
     getNameFormHTML() {
@@ -80,12 +81,12 @@ class Module {
 
         form.appendChild(nameField);
 
-        let submit = document.createElement('input');
-        submit.type = 'submit';
-        submit.value = 'Update Name';
+        //let submit = document.createElement('input');
+        //submit.type = 'submit';
+        //submit.value = 'Update Name';
 
-        form.addEventListener('submit', this.updateName.bind(this));
-        form.appendChild(submit);
+        //form.addEventListener('submit', this.updateName.bind(this));
+        //form.appendChild(submit);
 
         return form;
     }
@@ -100,9 +101,14 @@ class Module {
 
         //change edit button to done editing button
         this.editButton.textContent = 'Finished Editing';
-        this.editButton.onclick = this.derenderEdit.bind(this);
+        this.editButton.onclick = this.finshEditing.bind(this);
     }
-    
+
+    finshEditing(e) {
+        this.updateName(e);
+        this.derenderEdit(e);
+    }
+
     derenderEdit(e) {
         e.preventDefault()
         this.div.querySelector('header').remove();

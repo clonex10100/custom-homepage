@@ -25,4 +25,31 @@ class BookmarkModuleAdapter {
             x => console.log('Post request for bookmark module failed')
         );
     }
+
+    static updateBookmarkModule(bookmark_module, callback) {
+        let options = {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+              name: bookmark_module.name,
+          })
+        }
+        fetch(`http://localhost:3000/homepages/1/bookmark_modules/${bookmark_module.id}`, options).then(
+            resp => {
+                if (resp.ok) {
+                    return resp.json()
+                } else{
+                    console.log(resp)
+                    throw 'POST failed';
+                }
+            }
+        ).then(
+            json => callback(json)
+        ).catch(
+            x => console.log(x)
+        );
+    }
 }
