@@ -5,6 +5,16 @@ fetch('http://localhost:3000/homepages/1/bookmark_modules').then( resp => resp.j
     });
 });
 
+noteDummyData = [
+    ['shopping list', 1, 'Apples \n Oranges \n Milk'],
+    ['todo list', 2, 'finish js portfolio project, eat, sleep']
+];
+
+noteDummyData.forEach(noteModParams => {
+    let nm = new NoteModule(...noteModParams);
+    nm.render();
+});
+
 let form = document.getElementById('new-module-form');
 form.addEventListener('submit', e => {
     e.preventDefault()
