@@ -90,7 +90,7 @@ class BookmarkModule extends Module {
         super.renderEdit(e);
         let form = this.getBookmarkFormHTML();
         this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton()); 
-        this.div.append(form)     
+        this.div.querySelector('section').append(form)     
     }
 
     derenderEdit(e) {
