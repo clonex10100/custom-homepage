@@ -1,11 +1,14 @@
 //TODO, add delete bookmarks
 class BookmarkModule extends Module {
-    constructor(name, id, bookmarks_data=[]) {
+    static createFromJson(json) {
+        return new this.constructor(json.name)
+    }
+    constructor(name, adapter, id, bookmarks_data=[]) {
         super(name, id);
+        this.adapter = adapter;
         this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.url, this, bookmark_hash.id));
     }
 
-    
     save() {
         BookmarkModuleAdapter.postBookmarkModule(this, e => {
             this.id = e.id;
@@ -35,10 +38,8 @@ class BookmarkModule extends Module {
     getBookmarkFormHTML() {
         let form = document.createElement('form');
 
-        form.appendChild(document.createElement('hr'));
-
         let bookmarkNameLabel = document.createElement('label')
-        bookmarkNameLabel.textContent = 'Bookmark Name: ';
+        bookmarkNameLabel.textContent = 'New Bookmark Name: ';
         form.appendChild(bookmarkNameLabel);
 
         let bookmarkNameField = document.createElement('input')
@@ -48,7 +49,7 @@ class BookmarkModule extends Module {
         form.appendChild(document.createElement('br'));
 
         let bookmarkURLLabel = document.createElement('label')
-        bookmarkURLLabel.textContent = 'Bookmark URL: ';
+        bookmarkURLLabel.textContent = 'New Bookmark URL: ';
         form.appendChild(bookmarkURLLabel);
 
         let bookmarkURLField = document.createElement('input')
@@ -61,9 +62,9 @@ class BookmarkModule extends Module {
         submit.type = 'submit';
         submit.value = 'Submit New Bookmark';
         form.appendChild(submit);
-        
+
         //Button to 'unrender' the form
-        
+
         //Form Submit Callback
         form.addEventListener('submit', e => {
             //TODO add validations
@@ -83,14 +84,14 @@ class BookmarkModule extends Module {
     }
 
 
-    
+
     //Callback for the 'add new bookmark' button in footer, renders the bookmark creation form
     //'this' needs to be bound
     renderEdit(e) {
         super.renderEdit(e);
         let form = this.getBookmarkFormHTML();
-        this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton()); 
-        this.div.querySelector('section').append(form)     
+        this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton());
+        this.div.querySelector('section').append(form);
     }
 
     derenderEdit(e) {

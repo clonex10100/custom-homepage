@@ -13,7 +13,6 @@ class HomepageAdapter {
 
         fetch("http://localhost:3000/homepages/authenticate", options)
             .then(resp => resp.json())
-            .then(json => callback(json))
-        .catch(e => console.log('Error' + e));
+            .then(json => callback(json));
     }
 }

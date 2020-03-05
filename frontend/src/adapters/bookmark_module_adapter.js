@@ -1,5 +1,10 @@
 class BookmarkModuleAdapter {
-    static postBookmarkModule(bookmark_module, callback) {
+    constructor(homepage) {
+        this.homepageId = homepage.id;
+        this.jwt = homepage.jwt;
+        this.url = `http://localhost:3000/homepages/${this.homepageId}/bookmark_modules`;
+    }
+    postBookmarkModule(bookmark_module, callback) {
         let options = {
           method: "POST",
           headers: {
@@ -26,7 +31,7 @@ class BookmarkModuleAdapter {
         );
     }
 
-    static updateBookmarkModule(bookmark_module, callback) {
+    updateBookmarkModule(bookmark_module, callback) {
         let options = {
           method: "PATCH",
           headers: {
@@ -51,5 +56,9 @@ class BookmarkModuleAdapter {
         ).catch(
             x => console.log(x)
         );
+    }
+
+    getBookmarkModules(callback) {
+        fetch(this.url).then(resp => resp.json()).then(json => callback(json));
     }
 }
