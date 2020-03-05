@@ -5,24 +5,25 @@
         <link rel="stylesheet" tydive="text/css" href="stylesheet.css">
     </head>
     <body>
-        <div class="menu">
+        <div class="titlebar">
             <header>
                 <h1>Your Custom Homepage</h1>
             </header>
-            <form id="new-module-form">
-                <h3>Create a new Module</h3>
-                <label>Name</label>
-                <input type="text" name="name">
-                <input type="submit">
-            </form>
         </div>
+        <main>
         <div id="module-container" class="clearfix">
         </div>
+        </main>
     </body>
     <script src="src/helpers.js"></script>
 
+    <script src="src/app.js"></script>
     <script src="src/adapters/bookmark_adapter.js"></script>
     <script src="src/adapters/bookmark_module_adapter.js"></script>
+    <script src="src/adapters/note_module_adapter.js"></script>
+    <script src="src/adapters/homepage_adapter.js"></script>
+    <script src="src/components/homepage.js"></script>
+    <script src="src/components/homepage_authenticator.js"></script>
     <script src="src/components/module.js"></script>
     <script src="src/components/bookmark.js"></script>
     <script src="src/components/note_module.js"></script>

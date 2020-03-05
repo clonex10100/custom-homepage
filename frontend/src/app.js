@@ -5,7 +5,7 @@ class App {
         }
         else {
             let authenticator = new HomepageAuthenticator
-            document.querySelector('header').appendChild(authenticator.getAuthenticationFormHTML());
+            authenticator.render()
         }
     }
 

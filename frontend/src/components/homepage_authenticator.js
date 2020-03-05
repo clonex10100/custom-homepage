@@ -22,12 +22,23 @@ class HomepageAuthenticator {
         return form;
     }
 
+    render() {
+        document.querySelector('.titlebar').appendChild(this.getAuthenticationFormHTML());
+    }
+
+    deRender() {
+        this.form.remove();
+    }
+
+    
+
     authenticate(e) {
         e.preventDefault();
         this.adapter.authenticate(e.target.querySelector('#homepagename').value, json => {
             if(json.error) {
                 this.renderError(json.error);
             } else {
+                this.deRender();
                 App.renderHomepage(new Homepage(json.name, json.id, json.jwt));
             }
         });
