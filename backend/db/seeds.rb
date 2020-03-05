@@ -7,11 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 homepages = ["entertainment", "work", "social"].map{ |name| Homepage.create(name: name) }
 
-homepages[0].bookmark_modules.build(name: 'streaming');
-homepages[0].bookmark_modules.build(name: 'blogs');
+homepages[0].bookmark_modules.build(name: 'streaming').save;
+homepages[0].bookmark_modules.build(name: 'blogs').save;
 
-homepages[1].bookmark_modules.build(name: 'docs');
-homepages[1].bookmark_modules.build(name: 'wikis');
+homepages[1].bookmark_modules.build(name: 'docs').save;
+homepages[1].bookmark_modules.build(name: 'wikis').save;
 
-homepages[2].bookmark_modules.build(name: 'forums');
-homepages[2].bookmark_modules.build(name: 'email');
+homepages[2].bookmark_modules.build(name: 'forums').save;
+homepages[2].bookmark_modules.build(name: 'email').save;
