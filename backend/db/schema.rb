@@ -10,21 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_082000) do
-
-  create_table "bookmark_modules", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "homepage_id"
-    t.index ["homepage_id"], name: "index_bookmark_modules_on_homepage_id"
-  end
+ActiveRecord::Schema.define(version: 2020_03_06_224216) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.integer "bookmark_module_id", null: false
-    t.index ["bookmark_module_id"], name: "index_bookmarks_on_bookmark_module_id"
   end
 
   create_table "homepages", force: :cascade do |t|
@@ -34,16 +24,12 @@ ActiveRecord::Schema.define(version: 2020_03_01_082000) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "note_modules", force: :cascade do |t|
+  create_table "modules", force: :cascade do |t|
     t.string "name"
-    t.string "content"
-    t.integer "homepage_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["homepage_id"], name: "index_note_modules_on_homepage_id"
+    t.integer "sort_priority"
+    t.string "content_type", null: false
+    t.integer "content_id", null: false
+    t.index ["content_type", "content_id"], name: "index_modules_on_content_type_and_content_id"
   end
 
-  add_foreign_key "bookmark_modules", "homepages"
-  add_foreign_key "bookmarks", "bookmark_modules"
-  add_foreign_key "note_modules", "homepages"
 end
