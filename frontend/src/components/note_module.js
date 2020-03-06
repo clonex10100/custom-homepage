@@ -1,6 +1,7 @@
 class NoteModule extends Module {
     constructor(name, id, note) {
         super(name, id);
+        this.adapter = NoteModuleAdapter;
         this.note = note;
     }
 
@@ -19,6 +20,10 @@ class NoteModule extends Module {
 
         form.appendChild(note);
         return form;
+    }
+
+    finishEditing(e) {
+
     }
 
     renderEdit(e) {
