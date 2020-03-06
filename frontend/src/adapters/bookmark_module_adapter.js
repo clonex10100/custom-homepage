@@ -59,6 +59,15 @@ class BookmarkModuleAdapter {
     }
 
     getBookmarkModules(callback) {
-        fetch(this.url).then(resp => resp.json()).then(json => callback(json));
+        let options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": this.jwt
+          }
+        }
+        console.log(options);
+        fetch(this.url, options).then(resp => resp.json()).then(json => callback(json));
     }
 }

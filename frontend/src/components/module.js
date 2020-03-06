@@ -67,7 +67,7 @@ class Module {
     updateName(e) {
         e.preventDefault()
         this.name = this.div.querySelector('.name-field').value;
-        BookmarkModuleAdapter.updateBookmarkModule(this);
+        this.adapter.updateBookmarkModule(this);
     }
 
     getNameFormHTML() {

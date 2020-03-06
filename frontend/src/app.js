@@ -11,6 +11,7 @@ class App {
 
     static renderHomepage(homepage) {
         let bookmarkModuleAdapter = new BookmarkModuleAdapter(homepage);
+        console.log(bookmarkModuleAdapter.jwt);
         let name, id, bm;
         bookmarkModuleAdapter.getBookmarkModules(json => {
             json.forEach(module_hash => {
