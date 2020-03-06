@@ -2,6 +2,13 @@ header {
     padding: 0.1em;
 }
 
+body {
+    background: #002b36;
+}
+h1, h2, h3, h4, h5, h6, p, label {
+    color: #93a1a1;
+}
+
 .titlebar {
     width: 73%;
     border-radius: 20px;
@@ -9,7 +16,7 @@ header {
     border-color: black;
     border: solid;
     border-color: #93a1a1;
-    background: #fdf6e3;
+    background: #073642;
     text-align: center;
     box-shadow: 5px 5px 20px;
 }
@@ -27,7 +34,7 @@ div#module-container {
 }
 
 div.module {
-    background: #fdf6e3;
+    background: #073642;
     border: solid;
     border-color: #93a1a1;
     border-radius: 10px 10px 0px 0px;
