@@ -1,11 +1,9 @@
 class BookmarkAdapter extends Adapter {
-    postBookmark(bookmark, callback) {
+    postBookmark(content, callback) {
         let options = this.options()
         options.method = 'POST';
         options.body = JSON.stringify({
-          name: bookmark.name,
-          url: bookmark.url,
-          bookmark_container_id: bookmark.container.id
+            bookmark: content
         });
 
         fetch("http://localhost:3000/bookmarks", options).then(

@@ -2,7 +2,7 @@
 class BookmarkContainer extends Content {
     constructor(module, adapter, id, bookmarks_data = []) {
         super(module, adapter, id)
-        this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, adapter, bookmark_hash.url, this, bookmark_hash.id));
+        this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(this, this.adapter, bookmark_hash.id, bookmark_hash.name, bookmark_hash.url, bookmark_hash.hotkey));
         this.render()
     }
 
@@ -67,13 +67,16 @@ class BookmarkContainer extends Content {
             e.preventDefault();
 
             //create and save the bookmark to database
-            let bookmark = new Bookmark(bookmarkNameField.value, this.adapter, bookmarkURLField.value, this);
-            bookmark.save()
+            this.adapter.postBookmark({name: bookmarkNameField.value, url: bookmarkURLField.value, bookmark_container_id: this.id}, json => {
+                let bookmark = new Bookmark(this, this.adapter, json.id, json.name, json.url);
+                bookmark.render();
+                bookmark.renderDeleteButton();
+                this.bookmarks.push(bookmark);
+            });
 
             bookmarkNameField.value = '';
             bookmarkURLField.value = '';
 
-            this.bookmarks.push(bookmark);
         });
 
         return form;

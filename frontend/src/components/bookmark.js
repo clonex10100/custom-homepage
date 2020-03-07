@@ -1,21 +1,11 @@
 class Bookmark {
-    constructor(name, adapter, url, container, id, hotkey) {
+    constructor(container, adapter, id, name, url, hotkey) {
         this.name = name;
         this.adapter = adapter;
         this.url = url;
         this.id = id;
         this.container = container;
         this.hotkey = hotkey;
-    }
-
-    save() {
-        this.adapter.postBookmark(this, json => {
-            this.id = json.id;
-            this.name = json.name;
-            this.url = json.url;
-            this.render()
-            this.renderDeleteButton();
-        });
     }
 
     getHTML() {
