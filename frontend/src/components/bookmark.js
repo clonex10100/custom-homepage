@@ -10,6 +10,8 @@ class Bookmark {
     save() {
         BookmarksAdapter.postBookmark(this, json => {
             this.id = json.id;
+            this.name = json.name;
+            this.url = json.url;
             this.render()
             this.renderDeleteButton();
         });
