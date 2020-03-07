@@ -10,14 +10,13 @@ class App {
     }
 
     static renderHomepage(homepage) {
-        let bookmarkModuleAdapter = new BookmarkModuleAdapter(homepage);
-        console.log(bookmarkModuleAdapter.jwt);
-        let name, id, bm;
-        bookmarkModuleAdapter.getBookmarkModules(json => {
+        let moduleAdapter = new ModuleAdapter(homepage);
+        let name, id, bm, content_type;
+        moduleAdapter.getModules(json => {
             json.forEach(module_hash => {
                 console.log(module_hash);
-                ({name, id} = module_hash);
-                bm = new BookmarkModule(name, bookmarkModuleAdapter, id);
+                ({name, id, content_type} = module_hash);
+                bm = new Module(name, moduleAdapter, id, content_type);
                 bm.render();
             });
         });
