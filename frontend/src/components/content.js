@@ -1,6 +1,7 @@
 class Content {
-    constructor(module, id) {
+    constructor(module, adapter, id) {
         this.module = module;
+        this.adapter = adapter;
         this.id = id;
     }
 

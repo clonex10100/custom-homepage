@@ -10,13 +10,18 @@ class App {
     }
 
     static renderHomepage(homepage) {
-        let moduleAdapter = new ModuleAdapter(homepage);
+        let adapters = {
+            module: new ModuleAdapter(homepage),
+            note: new NoteAdapter(homepage),
+            bookmark: new BookmarkAdapter(homepage)
+
+        }
         let name, id, bm, content_type;
-        moduleAdapter.getModules(json => {
+        adapters.module.getModules(json => {
             json.forEach(module_hash => {
                 console.log(module_hash);
                 ({name, id, content_type} = module_hash);
-                bm = new Module(name, moduleAdapter, id, content_type);
+                bm = new Module(name, adapters, id, content_type);
                 bm.render();
             });
         });

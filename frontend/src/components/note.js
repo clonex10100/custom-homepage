@@ -1,6 +1,6 @@
 class Note extends Content {
-    constructor(module, id, content) {
-        super(module, id);
+    constructor(module, adapter, id, content) {
+        super(module, adapter, id);
         this.content = content;
         this.render()
     }
@@ -23,7 +23,7 @@ class Note extends Content {
     update() {
         let newContent = this.div.querySelector('textarea').value; 
         if (newContent !== this.content) {
-            NoteAdapter.updateNote(this.module, {content: newContent}, json => {
+            this.adapter.updateNote(this.module, {content: newContent}, json => {
                 console.log(json);
                 this.content = json.content;
                 this.derenderEdit();

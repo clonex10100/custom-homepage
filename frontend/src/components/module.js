@@ -1,20 +1,21 @@
 class Module {
-    constructor(name, adapter, id, contentType) {
+    constructor(name, adapters, id, contentType) {
         this.name = name;
         this.id = id;
         this.contentType = contentType
         this.container = document.getElementById('module-container')
-        this.adapter = adapter;
+        this.adapters = adapters
+        this.adapter = adapters.module;
         this.adapter.getContent(this, json => this.createContent(json));
     }
 
     createContent(json) {
         switch(this.contentType) {
             case 'BookmarkContainer':
-                this.content = new BookmarkContainer(this, json.id, json.bookmarks);
+                this.content = new BookmarkContainer(this, this.adapters.bookmark, json.id, json.bookmarks);
                 break;
             case 'Note':
-                this.content = new Note(this, json.id, json.content);
+                this.content = new Note(this, this.adapters.note, json.id, json.content);
                 break;
         }
     }

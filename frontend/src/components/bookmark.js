@@ -1,6 +1,7 @@
 class Bookmark {
-    constructor(name, url, container, id, hotkey) {
+    constructor(name, adapter, url, container, id, hotkey) {
         this.name = name;
+        this.adapter = adapter;
         this.url = url;
         this.id = id;
         this.container = container;
@@ -8,7 +9,7 @@ class Bookmark {
     }
 
     save() {
-        BookmarksAdapter.postBookmark(this, json => {
+        this.adapter.postBookmark(this, json => {
             this.id = json.id;
             this.name = json.name;
             this.url = json.url;
@@ -37,7 +38,7 @@ class Bookmark {
         let deleteButton = document.createElement('button');
         deleteButton.textContent = 'delete';
         deleteButton.onclick = e => {
-            BookmarksAdapter.deleteBookmark(this, this.destroy.bind(this));
+            this.adapter.deleteBookmark(this, this.destroy.bind(this));
             this.container.removeBookmark(this);
         };
        this.li.appendChild(deleteButton); 

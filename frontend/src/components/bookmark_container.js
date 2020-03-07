@@ -1,8 +1,8 @@
 //TODO, add delete bookmarks
 class BookmarkContainer extends Content {
-    constructor(module, id, bookmarks_data = []) {
-        super(module, id)
-        this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.url, this, bookmark_hash.id));
+    constructor(module, adapter, id, bookmarks_data = []) {
+        super(module, adapter, id)
+        this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, adapter, bookmark_hash.url, this, bookmark_hash.id));
         this.render()
     }
 
@@ -67,7 +67,7 @@ class BookmarkContainer extends Content {
             e.preventDefault();
 
             //create and save the bookmark to database
-            let bookmark = new Bookmark(bookmarkNameField.value, bookmarkURLField.value, this);
+            let bookmark = new Bookmark(bookmarkNameField.value, this.adapter, bookmarkURLField.value, this);
             bookmark.save()
 
             bookmarkNameField.value = '';
