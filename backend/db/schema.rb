@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_07_012212) do
+ActiveRecord::Schema.define(version: 2020_03_07_222439) do
 
   create_table "bookmark_containers", force: :cascade do |t|
   end
@@ -27,6 +27,10 @@ ActiveRecord::Schema.define(version: 2020_03_07_012212) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.string "content"
   end
 
   create_table "page_modules", force: :cascade do |t|
