@@ -3,7 +3,7 @@ class CreateBookmarks < ActiveRecord::Migration[6.0]
     create_table :bookmarks do |t|
       t.string :name
       t.string :url
-      t.references :bookmark_module_content, null: false, foreign_key: true 
+      t.references :bookmark_container, null: false, foreign_key: true 
     end
   end
 end

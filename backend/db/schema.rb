@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2020_03_07_012212) do
   create_table "bookmarks", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.integer "bookmark_module_content_id", null: false
-    t.index ["bookmark_module_content_id"], name: "index_bookmarks_on_bookmark_module_content_id"
+    t.integer "bookmark_container_id", null: false
+    t.index ["bookmark_container_id"], name: "index_bookmarks_on_bookmark_container_id"
   end
 
   create_table "homepages", force: :cascade do |t|
@@ -39,6 +39,6 @@ ActiveRecord::Schema.define(version: 2020_03_07_012212) do
     t.index ["homepage_id"], name: "index_page_modules_on_homepage_id"
   end
 
-  add_foreign_key "bookmarks", "bookmark_module_contents"
+  add_foreign_key "bookmarks", "bookmark_containers"
   add_foreign_key "page_modules", "homepages"
 end

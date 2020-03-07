@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :homepages, only: [:show, :create] do
-    resources :page_modules, only: [:index, :create, :update]
+    resources :page_modules, only: [:index, :create, :update] do
+      resource :content, only: [:show, :create, :update]
+    end
   end
   resources :bookmarks, only: [:create, :destroy]
 
