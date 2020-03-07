@@ -1,37 +1,33 @@
 //TODO, add delete bookmarks
-class BookmarkModule extends Module {
-    static createFromJson(json) {
-        return new this.constructor(json.name)
-    }
-    constructor(name, adapter, id, bookmarks_data=[]) {
-        super(name, id);
-        this.adapter = adapter;
+class BookmarkContainer extends Content {
+    constructor(module, id, bookmarks_data = []) {
+        super(module, id)
         this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(bookmark_hash.name, bookmark_hash.url, this, bookmark_hash.id));
+        this.render()
     }
 
-    save() {
-        BookmarkModuleAdapter.postBookmarkModule(this, e => {
-            this.id = e.id;
-            this.render()
-        });
-    }
-
-    //Next Two Methods are for generating the base HTML. They're called by Module.render().
-    getContentHTML() {
-        let section = super.getContentHTML();
+    getHTML() {
         let bookmarks_list = document.createElement('ul');
         bookmarks_list.classList.add('bookmarks-list');
-        section.appendChild(bookmarks_list);
-        return section;
+        return bookmarks_list;
     }
 
-    //Renders the element, should only be called once
     render() {
-        //this renders the html redurned by getContentHTML
         super.render()
         for(let bookmark of this.bookmarks) {
             bookmark.render();
         }
+    }
+
+    renderEdit() {
+        let form = this.getBookmarkFormHTML();
+        this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton());
+        this.div.append(form);
+    }
+
+    derenderEdit() {
+        this.bookmarks.forEach(bookmark => bookmark.unRenderDeleteButton());
+        this.div.querySelector('form').remove()
     }
 
     //Generate html form for adding bookmarks
@@ -81,22 +77,5 @@ class BookmarkModule extends Module {
         });
 
         return form;
-    }
-
-
-
-    //Callback for the 'add new bookmark' button in footer, renders the bookmark creation form
-    //'this' needs to be bound
-    renderEdit(e) {
-        super.renderEdit(e);
-        let form = this.getBookmarkFormHTML();
-        this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton());
-        this.div.querySelector('section').append(form);
-    }
-
-    derenderEdit(e) {
-        super.derenderEdit(e);
-        this.bookmarks.forEach(bookmark => bookmark.unRenderDeleteButton());
-        this.div.querySelector('form').remove()
     }
 }

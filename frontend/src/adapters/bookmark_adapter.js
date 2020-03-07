@@ -9,7 +9,7 @@ class BookmarksAdapter {
           body: JSON.stringify({
               name: bookmark.name,
               url: bookmark.url,
-              bookmark_module_id: bookmark.module.id
+              bookmark_container_id: bookmark.container.id
           })
         }
         fetch("http://localhost:3000/bookmarks", options).then(

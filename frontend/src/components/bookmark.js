@@ -1,9 +1,9 @@
 class Bookmark {
-    constructor(name, url, module, id, hotkey) {
+    constructor(name, url, container, id, hotkey) {
         this.name = name;
         this.url = url;
         this.id = id;
-        this.module = module;
+        this.container = container;
         this.hotkey = hotkey;
     }
 
@@ -28,7 +28,7 @@ class Bookmark {
 
     render() {
         this.li = this.getHTML();
-        this.module.div.querySelector('.bookmarks-list').appendChild(this.li);
+        this.container.div.querySelector('.bookmarks-list').appendChild(this.li);
     }
 
     renderDeleteButton() {

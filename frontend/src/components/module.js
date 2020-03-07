@@ -1,13 +1,22 @@
 class Module {
-    constructor(name, id) {
+    constructor(name, adapter, id, contentType) {
         this.name = name;
         this.id = id;
+        this.contentType = contentType
         this.container = document.getElementById('module-container')
+        this.adapter = adapter;
+        this.adapter.getContent(this, json => this.createContent(json));
     }
 
-    //Decendents should probably not overwrite
-    getHeaderHTML() {
+    createContent(json) {
+        switch(this.contentType) {
+            case 'BookmarkContainer':
+                this.content = new BookmarkContainer(this, json.id, json.bookmarks);
+                break;
+        }
+    }
 
+    getHeaderHTML() {
         let header = document.createElement('header');
         let title = document.createElement('h3');
         title.classList.add('module-name');
@@ -17,14 +26,12 @@ class Module {
         return header;
     }
 
-    //Should Always Be Overwritten by decendents
-    getContentHTML() {
-        let div = document.createElement('section')
-        div.classList.add('module-content');
-        return div;
+    getContentContainerHTML() {
+        let section = document.createElement('section');
+        section.classList.add('content');
+        return section;
     }
 
-    //Decendents should probably not overwrite
     getFooterHTML() {
         let footer = document.createElement('footer');
         this.editButton = document.createElement('button')
@@ -44,7 +51,7 @@ class Module {
 
         div.appendChild(document.createElement('hr'));
 
-        div.appendChild(this.getContentHTML());
+        div.appendChild(this.getContentContainerHTML());
 
         div.appendChild(document.createElement('hr'));
 
@@ -64,10 +71,17 @@ class Module {
         }
     }
 
-    updateName(e) {
+    update(e) {
         e.preventDefault()
-        this.name = this.div.querySelector('.name-field').value;
-        this.adapter.updateBookmarkModule(this);
+        let name = this.div.querySelector('.name-field').value;
+        if (name !== this.name) {
+            this.adapter.updateModule(this, json => {
+                this.name = json.name; 
+                this.derenderEdit();
+            });
+        } else {
+            this.derenderEdit();
+        }
     }
 
     getNameFormHTML() {
@@ -81,18 +95,12 @@ class Module {
 
         form.appendChild(nameField);
 
-        //let submit = document.createElement('input');
-        //submit.type = 'submit';
-        //submit.value = 'Update Name';
-
-        //form.addEventListener('submit', this.updateName.bind(this));
-        //form.appendChild(submit);
-
         return form;
     }
 
     renderEdit(e) {
         e.preventDefault();
+        this.content.renderEdit()
 
         //Add form to update name
         this.div.querySelector('.module-name').remove()
@@ -101,37 +109,19 @@ class Module {
 
         //change edit button to done editing button
         this.editButton.textContent = 'Finished Editing';
-        this.editButton.onclick = this.finshEditing.bind(this);
+        this.editButton.onclick = this.finishEditing.bind(this);
     }
 
-    finshEditing(e) {
-        this.updateName(e);
-        this.derenderEdit(e);
+    finishEditing(e) {
+        this.update(e);
+        this.content.finishEditing();
     }
 
-    derenderEdit(e) {
-        e.preventDefault()
+    derenderEdit() {
         this.div.querySelector('header').remove();
         this.div.prepend(this.getHeaderHTML());
 
         this.editButton.textContent = 'Edit Module';
         this.editButton.onclick = this.renderEdit.bind(this);
-    }
-
-    //TODO, add real name editing functionality, this code is broken
-    getnameFormHTML() {
-        let form = document.createElement('form');
-
-        let nameLabel = document.createElement('label');
-        nameLabel.name = 'name';
-        nameLabel.innerText = 'Name: ';
-        form.appendChild(nameLabel);
-
-        let nameField = document.createElement('input');
-        nameField.name = 'name';
-        nameField.value = this.name;
-        form.appendChild(nameField);
-
-        return form;
     }
 }
