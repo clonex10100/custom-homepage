@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authenticate_homepage, except: [:authenticate]
+  #before_action :authenticate_homepage, except: [:authenticate]
   def authenticate_homepage
     jwt = request.authorization
     puts request.authorization

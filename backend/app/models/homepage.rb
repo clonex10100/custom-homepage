@@ -1,3 +1,3 @@
 class Homepage < ApplicationRecord
-  has_many :bookmark_modules
+  has_many :page_modules
 end

@@ -10,11 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_06_224216) do
+ActiveRecord::Schema.define(version: 2020_03_07_012212) do
+
+  create_table "bookmark_containers", force: :cascade do |t|
+  end
 
   create_table "bookmarks", force: :cascade do |t|
     t.string "name"
     t.string "url"
+    t.integer "bookmark_module_content_id", null: false
+    t.index ["bookmark_module_content_id"], name: "index_bookmarks_on_bookmark_module_content_id"
   end
 
   create_table "homepages", force: :cascade do |t|
@@ -24,12 +29,16 @@ ActiveRecord::Schema.define(version: 2020_03_06_224216) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "modules", force: :cascade do |t|
+  create_table "page_modules", force: :cascade do |t|
     t.string "name"
     t.integer "sort_priority"
+    t.integer "homepage_id", null: false
     t.string "content_type", null: false
     t.integer "content_id", null: false
-    t.index ["content_type", "content_id"], name: "index_modules_on_content_type_and_content_id"
+    t.index ["content_type", "content_id"], name: "index_page_modules_on_content_type_and_content_id"
+    t.index ["homepage_id"], name: "index_page_modules_on_homepage_id"
   end
 
+  add_foreign_key "bookmarks", "bookmark_module_contents"
+  add_foreign_key "page_modules", "homepages"
 end
