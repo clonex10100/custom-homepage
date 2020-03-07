@@ -16,18 +16,13 @@ class Content {
     }
 
     update(){
-
+        this.derenderEdit();
     }
 
 
     //Should put the content into editing mode E.G. Adds a form to add new bookmarks for the bookmark container
     renderEdit() {
 
-    }
-
-    finishEditing(){
-        this.update();
-        this.derenderEdit();
     }
 
     derenderEdit() {

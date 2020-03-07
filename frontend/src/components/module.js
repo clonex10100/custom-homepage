@@ -13,6 +13,9 @@ class Module {
             case 'BookmarkContainer':
                 this.content = new BookmarkContainer(this, json.id, json.bookmarks);
                 break;
+            case 'Note':
+                this.content = new Note(this, json.id, json.content);
+                break;
         }
     }
 
@@ -76,7 +79,7 @@ class Module {
         let name = this.div.querySelector('.name-field').value;
         if (name !== this.name) {
             this.adapter.updateModule(this, json => {
-                this.name = json.name; 
+                this.name = json.name;
                 this.derenderEdit();
             });
         } else {
@@ -114,7 +117,7 @@ class Module {
 
     finishEditing(e) {
         this.update(e);
-        this.content.finishEditing();
+        this.content.update();
     }
 
     derenderEdit() {
