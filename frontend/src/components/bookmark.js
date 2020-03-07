@@ -38,6 +38,7 @@ class Bookmark {
         deleteButton.textContent = 'delete';
         deleteButton.onclick = e => {
             BookmarksAdapter.deleteBookmark(this, this.destroy.bind(this));
+            this.container.removeBookmark(this);
         };
        this.li.appendChild(deleteButton); 
     }

@@ -78,4 +78,10 @@ class BookmarkContainer extends Content {
 
         return form;
     }
+
+    removeBookmark(bookmark) {
+        console.log(this.bookmarks)
+        this.bookmarks = this.bookmarks.filter(arrayBookmark => arrayBookmark !== bookmark);
+        console.log(this.bookmarks)
+    }
 }
