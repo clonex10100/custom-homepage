@@ -5,6 +5,19 @@ class PageModulesController < ApplicationController
     render json: PageModuleSerializer.json(modules)
   end
 
+  def create
+    homepage = Homepage.find(params[:homepage_id])
+    mod = homepage.page_modules.build(page_module_params)
+    mod.content = case params[:page_module][:type]
+      when 'BookmarkContainer'
+        BookmarkContainer.new
+      when 'Note'
+        Note.new
+    end
+    mod.save
+    render json: PageModuleSerializer.json(mod)
+  end
+
   def update
     homepage = Homepage.find(params[:homepage_id])
     mod = homepage.page_modules.find(params[:id])

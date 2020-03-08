@@ -11,6 +11,13 @@ class ModuleAdapter extends Adapter {
         fetch(`${this.url}/${module.id}`, options).then(resp => resp.json()).then(callback);
     }
 
+    postModule(content, callback) {
+        let options = this.options()
+        options.method = "POST"
+        options.body = JSON.stringify({page_module: content});
+        fetch(this.url, options).then(resp => resp.json()).then(callback);
+    }
+
     getContent(module, callback) {
         let options = this.options()
         fetch(`${this.url}/${module.id}/content`, options).then(resp => resp.json()).then(json => callback(json));
