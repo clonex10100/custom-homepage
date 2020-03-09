@@ -5,7 +5,7 @@ class NoteAdapter extends Adapter {
         options.body = JSON.stringify({
             note: content
         })
-        fetch(`http://localhost:3000/homepages/1/page_modules/${module.id}/content`, options)
+        fetch(`${this.url}/page_modules/${module.id}/content`, options)
         .then(
             resp => resp.json()
         )

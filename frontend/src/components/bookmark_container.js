@@ -67,7 +67,7 @@ class BookmarkContainer extends Content {
             e.preventDefault();
 
             //create and save the bookmark to database
-            this.adapter.postBookmark({name: bookmarkNameField.value, url: bookmarkURLField.value, bookmark_container_id: this.id}, json => {
+            this.adapter.postBookmark(this, {name: bookmarkNameField.value, url: bookmarkURLField.value}, json => {
                 let bookmark = new Bookmark(this, this.adapter, json.id, json.name, json.url);
                 bookmark.render();
                 bookmark.renderDeleteButton();

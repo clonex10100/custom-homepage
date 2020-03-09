@@ -1,15 +1,24 @@
 class BookmarksController < ApplicationController
   def create
-    bookmark = Bookmark.create(bookmark_params)
-    render json: BookmarkSerializer.json(bookmark)
+    homepage = Homepage.find(params[:homepage_id])
+    mod = homepage.page_modules.find(params[:page_module_id])
+    if mod.content_type == "BookmarkContainer"
+      bookmark = mod.content.bookmarks.build(bookmark_params)
+      bookmark.save
+      render json: BookmarkSerializer.json(bookmark)
+    end
   end
 
   def destroy 
-    bookmark = Bookmark.find(params[:id]).delete
+    homepage = Homepage.find(params[:homepage_id])
+    mod = homepage.page_modules.find(params[:page_module_id])
+    if mod.content_type == "BookmarkContainer"
+      bookmark = Bookmark.find(params[:id]).delete
+    end
   end
 
   private
   def bookmark_params
-    params.require(:bookmark).permit(:bookmark_container_id, :name, :url)
+    params.require(:bookmark).permit(:name, :url)
   end
 end

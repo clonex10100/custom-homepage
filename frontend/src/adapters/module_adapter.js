@@ -1,4 +1,8 @@
 class ModuleAdapter extends Adapter {
+    constructor(hompage) {
+        super(hompage);
+        this.url += '/page_modules'
+    }
     getModules(callback) {
         let options = this.options()
         fetch(this.url, options).then(resp => resp.json()).then(callback);
