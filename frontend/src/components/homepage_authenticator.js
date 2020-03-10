@@ -1,6 +1,7 @@
 class HomepageAuthenticator {
-    constructor() {
+    constructor(app) {
         this.adapter = HomepageAdapter;
+        this.app = app;
     }
     getAuthenticationFormHTML() {
         let form = document.createElement('form');
@@ -39,7 +40,7 @@ class HomepageAuthenticator {
                 this.renderError(json.error);
             } else {
                 this.deRender();
-                App.renderHomepage(new Homepage(json.name, json.id, json.jwt));
+                this.app.renderHomepage(new Homepage(json.name, json.id, json.jwt));
             }
         });
     }

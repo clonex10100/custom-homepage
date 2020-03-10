@@ -3,7 +3,6 @@ class BookmarkContainer extends Content {
     constructor(module, adapter, id, bookmarks_data = []) {
         super(module, adapter, id)
         this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(this, this.adapter, bookmark_hash.id, bookmark_hash.name, bookmark_hash.url, bookmark_hash.hotkey));
-        this.render()
     }
 
     getHTML() {

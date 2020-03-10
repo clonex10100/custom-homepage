@@ -2,7 +2,6 @@ class Note extends Content {
     constructor(module, adapter, id, content) {
         super(module, adapter, id);
         this.content = content;
-        this.render()
     }
 
     getHTML() {

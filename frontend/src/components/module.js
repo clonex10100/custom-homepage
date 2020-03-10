@@ -6,7 +6,7 @@ class Module {
         this.container = document.getElementById('module-container')
         this.adapters = adapters
         this.adapter = adapters.module;
-        this.adapter.getContent(this, json => this.createContent(json));
+        this.adapter.getContent(this.id, json => this.createContent(json));
     }
 
     createContent(json) {
@@ -18,6 +18,7 @@ class Module {
                 this.content = new Note(this, this.adapters.note, json.id, json.content);
                 break;
         }
+        this.contentCreated = true;
     }
 
     getHeaderHTML() {
@@ -65,21 +66,25 @@ class Module {
     }
 
     //generates the modules html and adds it to the page, should only be called once
-    render() {
-        if(!this.rendered) {
-            this.div = this.getHTML();
-            this.rendered = true
-            this.container.appendChild(this.div);
-        } else {
-            throw 'Module should not be rendered twice'
+    _renderContent(){
+        if (this.contentCreated) {
+            this.content.render()
+        }else {
+            setTimeout(() => this._renderContent(), 50)
         }
+    }
+    render() {
+        this.div = this.getHTML();
+        this.container.appendChild(this.div);
+        this._renderContent()
+
     }
 
     update(e) {
         e.preventDefault()
         let name = this.div.querySelector('.name-field').value;
         if (name !== this.name) {
-            this.adapter.updateModule(this, json => {
+            this.adapter.updateModule(this.id, {name: name}, json => {
                 this.name = json.name;
                 this.derenderEdit();
             });

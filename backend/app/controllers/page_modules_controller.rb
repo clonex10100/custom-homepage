@@ -1,7 +1,7 @@
 class PageModulesController < ApplicationController
   def index
     homepage = Homepage.find(params[:homepage_id])
-    modules = homepage.page_modules
+    modules = homepage.page_modules.order('sort_priority asc')
     render json: PageModuleSerializer.json(modules)
   end
 
@@ -30,6 +30,6 @@ class PageModulesController < ApplicationController
 
   private
   def page_module_params
-    params.require(:page_module).permit(:name)
+    params.require(:page_module).permit(:name, :sort_priority)
   end
 end
