@@ -7,6 +7,7 @@ class Module {
         this.adapters = adapters
         this.adapter = adapters.module;
         this.adapter.getContent(this.id, json => this.createContent(json));
+        Module.all.push(this);
     }
 
     createContent(json) {
@@ -134,3 +135,4 @@ class Module {
         this.editButton.onclick = this.renderEdit.bind(this);
     }
 }
+Module.all = [];
