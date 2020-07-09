@@ -23,7 +23,6 @@ class Note extends Content {
         let newContent = this.div.querySelector('textarea').value; 
         if (newContent !== this.content) {
             this.adapter.updateNote(this.module, {content: newContent}, json => {
-                console.log(json);
                 this.content = json.content;
                 this.derenderEdit();
             });
