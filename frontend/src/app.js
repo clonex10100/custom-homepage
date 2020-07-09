@@ -3,11 +3,14 @@ class App {
         this.renderAuthentication();
     }
     renderAuthentication() {
-        let authenticator = new HomepageAuthenticator(this)
-        if (document.cookie.includes('homepage-name')){
-            authenticator.authenticate(getCookie('homepage-name'))
+        if (document.cookie.includes('jwt')){
+            let jwt = getCookie('jwt');
+            HomepageAdapter.getHomepage(jwt, json => {
+                this.renderHomepage(new Homepage(json.name, json.id, jwt));
+            });
         }
         else {
+            let authenticator = new HomepageAuthenticator(this)
             authenticator.render()
         }
     }
