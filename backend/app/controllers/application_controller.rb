@@ -3,6 +3,7 @@ class ApplicationController < ActionController::API
   def authenticate_homepage
     puts 'authenticated'
     jwt = request.authorization
-    render json: { error: "JWT Authentication Failed"}, status: :unauthorized unless jwt && JsonWebToken.decode(jwt)['id'].to_i == params[:homepage_id].to_i
+    render json: { error: "JWT Authentication Failed"}, status: :unauthorized unless jwt 
+    @homepage = Homepage.find(JsonWebToken.decode(jwt)['id'].to_i)
   end
 end

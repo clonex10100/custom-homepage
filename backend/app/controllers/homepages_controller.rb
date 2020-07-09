@@ -1,5 +1,9 @@
 class HomepagesController < ApplicationController
 
+  def show
+    render json: {id: @homepage.id, name: @homepage.name}
+  end
+
   def authenticate
     homepage = Homepage.find_by(name: params[:name])
     if homepage

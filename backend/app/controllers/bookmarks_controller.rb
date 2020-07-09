@@ -1,7 +1,6 @@
 class BookmarksController < ApplicationController
   def create
-    homepage = Homepage.find(params[:homepage_id])
-    mod = homepage.page_modules.find(params[:page_module_id])
+    mod = @homepage.page_modules.find(params[:page_module_id])
     if mod.content_type == "BookmarkContainer"
       bookmark = mod.content.bookmarks.build(bookmark_params)
       bookmark.save
@@ -10,8 +9,7 @@ class BookmarksController < ApplicationController
   end
 
   def destroy 
-    homepage = Homepage.find(params[:homepage_id])
-    mod = homepage.page_modules.find(params[:page_module_id])
+    mod = @homepage.page_modules.find(params[:page_module_id])
     if mod.content_type == "BookmarkContainer"
       bookmark = Bookmark.find(params[:id]).delete
     end

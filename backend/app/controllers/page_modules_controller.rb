@@ -1,13 +1,11 @@
 class PageModulesController < ApplicationController
   def index
-    homepage = Homepage.find(params[:homepage_id])
-    modules = homepage.page_modules.order('sort_priority asc')
+    modules = @homepage.page_modules.order('sort_priority asc')
     render json: PageModuleSerializer.json(modules)
   end
 
   def create
-    homepage = Homepage.find(params[:homepage_id])
-    mod = homepage.page_modules.build(page_module_params)
+    mod = @homepage.page_modules.build(page_module_params)
     mod.content = case params[:page_module][:type]
       when 'BookmarkContainer'
         BookmarkContainer.new
@@ -19,8 +17,7 @@ class PageModulesController < ApplicationController
   end
 
   def update
-    homepage = Homepage.find(params[:homepage_id])
-    mod = homepage.page_modules.find(params[:id])
+    mod = @homepage.page_modules.find(params[:id])
     if mod.update(page_module_params)
       render json: PageModuleSerializer.json(mod)
     else

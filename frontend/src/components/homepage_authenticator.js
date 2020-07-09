@@ -1,5 +1,5 @@
 class HomepageAuthenticator {
-    constructor(app) {
+    constructor(app, adapter) {
         this.adapter = HomepageAdapter;
         this.app = app;
     }
@@ -16,11 +16,7 @@ class HomepageAuthenticator {
         p.classList.add('errors');
         form.appendChild(p);
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            this.authenticate(e.target.querySelector('#homepagename').value);
-        }
-        );
+        form.addEventListener('submit', this.authenticate.bind(this));
 
         this.form = form;
 
@@ -29,21 +25,21 @@ class HomepageAuthenticator {
 
     render() {
         document.querySelector('.titlebar').appendChild(this.getAuthenticationFormHTML());
-        this.rendered = true;
     }
 
     deRender() {
         this.form.remove();
     }
 
-    authenticate(homepageName) {
-        this.adapter.authenticate(homepageName, json => {
+    authenticate(e) {
+        e.preventDefault();
+        this.adapter.authenticate(e.target.querySelector('#homepagename').value, json => {
             if(json.error) {
                 this.renderError(json.error);
             } else {
-                if (this.rendered) this.deRender();
+                this.deRender();
                 this.app.renderHomepage(new Homepage(json.name, json.id, json.jwt));
-                document.cookie = `homepage-name=${json.name}`
+                document.cookie = `jwt=${json.jwt}`
             }
         });
     }

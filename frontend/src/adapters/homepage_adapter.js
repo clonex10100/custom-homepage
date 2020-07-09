@@ -11,8 +11,24 @@ class HomepageAdapter {
           })
         }
 
-        fetch("http://localhost:3000/homepages/authenticate", options)
+        fetch("http://localhost:3000/homepage/authenticate", options)
             .then(resp => resp.json())
             .then(json => callback(json)).catch(e => console.log(e));
+    }
+
+    static getHomepage(jwt, callback) {
+        let options = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": jwt
+            },
+        }
+
+        fetch("http://localhost:3000/homepage", options)
+            .then(resp => resp.json())
+            .then(json => callback(json)).catch(e => console.log(e));
+        
     }
 }

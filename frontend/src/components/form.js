@@ -7,6 +7,11 @@ class Form {
         document.querySelector('.titlebar').appendChild(this.div);
     }
 
+    reRenderButtons() {
+        destroyAllChildren(this.div);
+        this.div.appendChild(this.getButtonsHTML());
+    }
+
     getHTML() {
         let div = document.createElement('div');
         div.appendChild(this.getButtonsHTML());
@@ -96,6 +101,7 @@ class Form {
                 }, timeout);
                 timeout += 50;
             });
+            this.reRenderButtons();
         });
         return form;
     }
@@ -132,6 +138,7 @@ class Form {
             json => {
                 let module = new Module(json.name, this.adapters, json.id, json.content_type)
                 module.render();
+                this.reRenderButtons();
             });
         });
         return form;
