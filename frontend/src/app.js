@@ -3,11 +3,11 @@ class App {
         this.renderAuthentication();
     }
     renderAuthentication() {
-        if (document.cookie.includes('homepage-id')){
-            console.log('ye');
+        let authenticator = new HomepageAuthenticator(this)
+        if (document.cookie.includes('homepage-name')){
+            authenticator.authenticate(getCookie('homepage-name'))
         }
         else {
-            let authenticator = new HomepageAuthenticator(this)
             authenticator.render()
         }
     }
@@ -27,7 +27,6 @@ class App {
                 bm.render();
             });
         });
-        console.log(Module.all);
         this.form = new Form(this.adapters);
         this.form.render();
     }

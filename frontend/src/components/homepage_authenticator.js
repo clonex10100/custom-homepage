@@ -16,7 +16,11 @@ class HomepageAuthenticator {
         p.classList.add('errors');
         form.appendChild(p);
 
-        form.addEventListener('submit', this.authenticate.bind(this));
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            this.authenticate(e.target.querySelector('#homepagename').value);
+        }
+        );
 
         this.form = form;
 
@@ -25,27 +29,26 @@ class HomepageAuthenticator {
 
     render() {
         document.querySelector('.titlebar').appendChild(this.getAuthenticationFormHTML());
+        this.rendered = true;
     }
 
     deRender() {
         this.form.remove();
     }
 
-    
-
-    authenticate(e) {
-        e.preventDefault();
-        this.adapter.authenticate(e.target.querySelector('#homepagename').value, json => {
+    authenticate(homepageName) {
+        this.adapter.authenticate(homepageName, json => {
             if(json.error) {
                 this.renderError(json.error);
             } else {
-                this.deRender();
+                if (this.rendered) this.deRender();
                 this.app.renderHomepage(new Homepage(json.name, json.id, json.jwt));
+                document.cookie = `homepage-name=${json.name}`
             }
         });
     }
 
     renderError(error) {
-       this.form.querySelector('.errors').textContent = error; 
+       this.form.querySelector('.errors').textContent = error;
     }
 }
