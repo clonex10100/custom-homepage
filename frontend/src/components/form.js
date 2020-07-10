@@ -33,7 +33,16 @@ class Form {
         let pageSettingsButton = document.createElement('button');
         pageSettingsButton.textContent = 'Edit Page Settings';
         pageSettingsButton.onclick = e => this.formButtonHandler(e, this.getPageSettingsHTML);
+
         div.appendChild(pageSettingsButton);
+        let logoutButton = document.createElement('button');
+        logoutButton.textContent = "Logout Of Homepage";
+        logoutButton.onclick = e => {
+            document.cookie = "jwt= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+            window.location.reload(false);
+        }
+
+        div.appendChild(logoutButton);
         return div;
     }
 
