@@ -1,19 +1,20 @@
 class App {
     start() {
-        //Attempts to get the homepage. If a jwt cookie is in the httpOnly header it will suceed and login, else authenticator will render login
-        let authenticator = new HomepageAuthenticator(this)
-        authenticator.getHomepage();
+        //Attempts to get the homepage. If a jwt cookie is in the httpOnly header it will succeed and login, else authenticator will render login
+        let authenticator = new HomepageAuthenticator(this.renderHomepage.bind(this))
+        authenticator.authenticate();
     }
 
-    renderHomepage(homepage) {
+    renderHomepage() {
         //Bind api adapters
         this.adapters = {
-            module: new ModuleAdapter(homepage),
-            note: new NoteAdapter(homepage),
-            bookmark: new BookmarkAdapter(homepage),
-            homepage: new HomepageAdapter(homepage)
+            module: new ModuleAdapter(),
+            note: new NoteAdapter(),
+            bookmark: new BookmarkAdapter(),
+            homepage: new HomepageAdapter()
 
         }
+
         let module, name, id, content_type;
         //Fetch modules from api, create and render them.
         this.adapters.module.getModules(json => {

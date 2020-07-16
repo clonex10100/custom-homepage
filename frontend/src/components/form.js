@@ -39,8 +39,7 @@ class Form {
         let logoutButton = document.createElement('button');
         logoutButton.textContent = "Logout Of Homepage";
         logoutButton.onclick = e => {
-            this.adapters.homepage.logout();
-            this.logoutCallback();
+            this.adapters.homepage.logout(this.logoutCallback);
         }
 
         div.appendChild(logoutButton);

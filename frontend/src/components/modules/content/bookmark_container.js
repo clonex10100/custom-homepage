@@ -4,7 +4,7 @@ class BookmarkContainer extends Content {
         this.bookmarks = bookmarks_data.map(bookmark_hash => new Bookmark(this, this.adapter, bookmark_hash.id, bookmark_hash.name, bookmark_hash.url, bookmark_hash.hotkey));
     }
 
-    getHTML() {
+    get _HTML() {
         let bookmarks_list = document.createElement('ul');
         bookmarks_list.classList.add('bookmarks-list');
         return bookmarks_list;
@@ -18,18 +18,18 @@ class BookmarkContainer extends Content {
     }
 
     renderEdit() {
-        let form = this.getBookmarkFormHTML();
-        this.bookmarks.forEach(bookmark => bookmark.renderDeleteButton());
+        let form = this._bookmarkFormHTML;
+        this.bookmarks.forEach(bookmark => bookmark.renderEdit());
         this.div.append(form);
     }
 
-    derenderEdit() {
-        this.bookmarks.forEach(bookmark => bookmark.unRenderDeleteButton());
+    _derenderEdit() {
+        this.bookmarks.forEach(bookmark => bookmark.unRenderEdit());
         this.div.querySelector('form').remove()
     }
 
     //Generate html form for adding bookmarks
-    getBookmarkFormHTML() {
+    get _bookmarkFormHTML() {
         let form = document.createElement('form');
 
         let bookmarkNameLabel = document.createElement('label')
@@ -68,7 +68,7 @@ class BookmarkContainer extends Content {
             this.adapter.postBookmark(this, {name: bookmarkNameField.value, url: bookmarkURLField.value}, json => {
                 let bookmark = new Bookmark(this, this.adapter, json.id, json.name, json.url);
                 bookmark.render();
-                bookmark.renderDeleteButton();
+                bookmark.renderEdit();
                 this.bookmarks.push(bookmark);
             });
 
@@ -81,8 +81,6 @@ class BookmarkContainer extends Content {
     }
 
     removeBookmark(bookmark) {
-        console.log(this.bookmarks)
         this.bookmarks = this.bookmarks.filter(arrayBookmark => arrayBookmark !== bookmark);
-        console.log(this.bookmarks)
     }
 }

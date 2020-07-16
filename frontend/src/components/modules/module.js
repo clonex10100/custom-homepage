@@ -1,17 +1,24 @@
 class Module {
+    container = document.getElementById('module-container');
+
     constructor(name, adapters, id, contentType) {
         this.name = name;
         this.id = id;
-        this.contentType = contentType
-        this.container = document.getElementById('module-container')
+
+        //Bind content adapters for later use and module adapter
         this.adapters = adapters
         this.adapter = adapters.module;
-        this.adapter.getContent(this.id, json => this.createContent(json));
+
+        //Content is polymorphic. Fetch the content json info and create the correct js object with it.
+        this.contentType = contentType
+        this.adapter.getContent(this.id, json => this._createContent(json));
+
+        //Keep track of all modules for sorting
         Module.all.push(this);
     }
 
     //Create and bind the correct content type
-    createContent(json) {
+    _createContent(json) {
         switch(this.contentType) {
             case 'BookmarkContainer':
                 this.content = new BookmarkContainer(this, this.adapters.bookmark, json.id, json.bookmarks);
@@ -23,7 +30,7 @@ class Module {
         this.contentCreated = true;
     }
 
-    getHeaderHTML() {
+    get _headerHTML() {
         let header = document.createElement('header');
         let title = document.createElement('h3');
         title.classList.add('module-name');
@@ -33,69 +40,58 @@ class Module {
         return header;
     }
 
-    getContentContainerHTML() {
+    get _contentContainerHTML() {
         let section = document.createElement('section');
         section.classList.add('content');
         return section;
     }
 
-    getFooterHTML() {
+    get _footerHTML() {
         let footer = document.createElement('footer');
         this.editButton = document.createElement('button')
         this.editButton.textContent = 'Edit Module';
-        this.editButton.onclick = this.renderEdit.bind(this);
+        this.editButton.onclick = this._renderEdit.bind(this);
         footer.appendChild(this.editButton);
         return footer;
     };
 
 
     //Every module has 3 components, a header, content, and footer. This method puts them all together.
-    getHTML() {
+    get _HTML() {
         let div = document.createElement('div');
         div.classList.add('module');
 
-        div.appendChild(this.getHeaderHTML());
+        div.appendChild(this._headerHTML);
 
         div.appendChild(document.createElement('hr'));
 
-        div.appendChild(this.getContentContainerHTML());
+        div.appendChild(this._contentContainerHTML);
 
         div.appendChild(document.createElement('hr'));
 
-        div.appendChild(this.getFooterHTML());
+        div.appendChild(this._footerHTML);
 
         return div;
     }
 
+    render() {
+        this.div = this._HTML;
+        this.container.appendChild(this.div);
+        this._renderContent()
+
+    }
+
     //generates the modules html and adds it to the page, should only be called once
     _renderContent(){
+        //If content object hasn't been created wait 50ms and try again
         if (this.contentCreated) {
             this.content.render()
         }else {
             setTimeout(() => this._renderContent(), 50)
         }
     }
-    render() {
-        this.div = this.getHTML();
-        this.container.appendChild(this.div);
-        this._renderContent()
 
-    }
-
-    update(e) {
-        e.preventDefault()
-        let name = this.div.querySelector('.name-field').value;
-        if (name !== this.name) {
-            this.adapter.updateModule(this.id, {name: name}, json => {
-                this.name = json.name;
-                this.derenderEdit();
-            });
-        } else {
-            this.derenderEdit();
-        }
-    }
-
-    getNameFormHTML() {
+    get _nameFormHTML() {
         let form = document.createElement('form');
         form.classList.add('name-form');
 
@@ -109,31 +105,46 @@ class Module {
         return form;
     }
 
-    renderEdit(e) {
+    _renderEdit(e) {
         e.preventDefault();
         this.content.renderEdit()
 
         //Add form to update name
         this.div.querySelector('.module-name').remove()
 
-        this.div.querySelector('header').appendChild(this.getNameFormHTML());
+        this.div.querySelector('header').appendChild(this._nameFormHTML);
 
         //change edit button to done editing button
         this.editButton.textContent = 'Finished Editing';
-        this.editButton.onclick = this.finishEditing.bind(this);
+        this.editButton.onclick = this._finishEditing.bind(this);
     }
 
-    finishEditing(e) {
-        this.update(e);
+    //Updates the module and its content
+    _finishEditing(e) {
+        this._update(e);
         this.content.update();
     }
 
-    derenderEdit() {
+    _update(e) {
+        e.preventDefault()
+        let name = this.div.querySelector('.name-field').value;
+        //Only query the api with an update if the name actually changed
+        if (name !== this.name) {
+            this.adapter.updateModule(this.id, {name: name}, json => {
+                this.name = json.name;
+                this._derenderEdit();
+            });
+        } else {
+            this._derenderEdit();
+        }
+    }
+
+    _derenderEdit() {
         this.div.querySelector('header').remove();
-        this.div.prepend(this.getHeaderHTML());
+        this.div.prepend(this._headerHTML);
 
         this.editButton.textContent = 'Edit Module';
-        this.editButton.onclick = this.renderEdit.bind(this);
+        this.editButton.onclick = this._renderEdit.bind(this);
     }
 }
 Module.all = [];

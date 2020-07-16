@@ -4,12 +4,13 @@ class Note extends Content {
         this.content = content;
     }
 
-    getHTML() {
+    get _HTML() {
         let p = document.createElement('p');
         p.textContent = this.content;
         return p;
     }
 
+    //Changes the note content into an editable text field
     renderEdit() {
         this.div.querySelector('p').remove();
         let form = document.createElement('form');
@@ -24,16 +25,16 @@ class Note extends Content {
         if (newContent !== this.content) {
             this.adapter.updateNote(this.module, {content: newContent}, json => {
                 this.content = json.content;
-                this.derenderEdit();
+                this._derenderEdit();
             });
         } else {
-            this.derenderEdit();  
+            this._derenderEdit();  
         }
     }
 
-    derenderEdit() {
+    _derenderEdit() {
         this.div.querySelector('form').remove();
-        this.div.appendChild(this.getHTML());
+        this.div.appendChild(this._HTML());
     }
 
 }

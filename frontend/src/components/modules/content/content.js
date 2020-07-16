@@ -6,27 +6,28 @@ class Content {
     }
 
     //The initial HTML that is rendered.
-    getHTML() {
+    get _HTML() {
         return document.createElement('p');
     }
 
-    //Renders the element, should only be called once
+    //Renders the element, should only be called once by its module
     render() {
         this.div = this.module.div.querySelector('.content');
-        this.div.appendChild(this.getHTML());
+        this.div.appendChild(this._HTML);
     }
 
+    //Called when the finish editing module button is pressed, should update the content and derender the edit mode changer
     update(){
-        this.derenderEdit();
+        this._derenderEdit();
     }
 
 
-    //Should put the content into editing mode E.G. Adds a form to add new bookmarks for the bookmark container
+    //Children must define these functions
     renderEdit() {
 
     }
 
-    derenderEdit() {
+    _derenderEdit() {
 
     }
 }

@@ -8,7 +8,7 @@ class Bookmark {
         this.hotkey = hotkey;
     }
 
-    getHTML() {
+    get _HTML() {
         let li = document.createElement('li');
         li.dataset.id = this.id;
         let a = document.createElement('a');
@@ -20,11 +20,11 @@ class Bookmark {
     }
 
     render() {
-        this.li = this.getHTML();
+        this.li = this._HTML;
         this.container.div.querySelector('.bookmarks-list').appendChild(this.li);
     }
 
-    renderDeleteButton() {
+    renderEdit() {
         let deleteButton = document.createElement('button');
         deleteButton.textContent = 'delete';
         deleteButton.onclick = e => {
@@ -34,7 +34,7 @@ class Bookmark {
        this.li.appendChild(deleteButton); 
     }
 
-    unRenderDeleteButton() {
+    unRenderEdit() {
         this.li.querySelector('button').remove();
     }
 

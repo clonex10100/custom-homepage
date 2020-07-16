@@ -24,7 +24,7 @@ class HomepagesController < ApplicationController
     cookies.delete :jwt
   end
 
-  def authenticate
+  def login
     homepage = Homepage.find_by(name: params[:name])
     if homepage && homepage.authenticate(params[:password])
       cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true}

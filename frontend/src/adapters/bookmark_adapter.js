@@ -1,4 +1,4 @@
-class BookmarkAdapter extends ContentAdapter {
+class BookmarkAdapter extends Adapter {
     postBookmark(container, content, callback) {
         let options = this.options()
         options.method = 'POST';
@@ -6,16 +6,21 @@ class BookmarkAdapter extends ContentAdapter {
             bookmark: content
         });
 
-        fetch(`${this.url}/page_modules/${container.module.id}/bookmarks`, options).then(
-            resp => resp.json()
-        ).then(
-            json => callback(json)
-        );
+        fetch(`${this.url}/page_modules/${container.module.id}/bookmarks`, options)
+            .then(
+                resp => resp.json()
+            ).then(
+                json => callback(json)
+            )
     }
 
     deleteBookmark(bookmark, callback) {
         let options = this.options();
         options.method = "DELETE";
-        fetch(`${this.url}/page_modules/${bookmark.container.module.id}/bookmarks/${bookmark.id}`, options).then(callback());
+
+        fetch(`${this.url}/page_modules/${bookmark.container.module.id}/bookmarks/${bookmark.id}`, options)
+            .then(
+                callback()
+            );
     }
 }
