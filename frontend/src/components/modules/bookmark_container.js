@@ -1,4 +1,3 @@
-//TODO, add delete bookmarks
 class BookmarkContainer extends Content {
     constructor(module, adapter, id, bookmarks_data = []) {
         super(module, adapter, id)

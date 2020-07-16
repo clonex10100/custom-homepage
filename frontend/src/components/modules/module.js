@@ -10,6 +10,7 @@ class Module {
         Module.all.push(this);
     }
 
+    //Create and bind the correct content type
     createContent(json) {
         switch(this.contentType) {
             case 'BookmarkContainer':

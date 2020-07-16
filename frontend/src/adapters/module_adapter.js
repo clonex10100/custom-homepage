@@ -1,4 +1,4 @@
-class ModuleAdapter extends Adapter {
+class ModuleAdapter extends ContentAdapter {
     constructor(hompage) {
         super(hompage);
         this.url += '/page_modules'

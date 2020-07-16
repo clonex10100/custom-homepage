@@ -1,4 +1,4 @@
-class BookmarkAdapter extends Adapter {
+class BookmarkAdapter extends ContentAdapter {
     postBookmark(container, content, callback) {
         let options = this.options()
         options.method = 'POST';

@@ -1,6 +1,6 @@
 class HomepageAuthenticator {
     constructor(app) {
-        this.adapter = HomepageAdapter;
+        this.adapter = new HomepageAuthAdapter();
         this.app = app;
     }
     get loginFormHtml() {
@@ -53,9 +53,14 @@ class HomepageAuthenticator {
                 this.renderError(json.error);
             } else {
                 this.deRender();
-                this.app.renderHomepage(new Homepage(json.name, json.id, json.jwt));
-                document.cookie = `jwt=${json.jwt}`
+                this.app.renderHomepage(new Homepage(json.name, json.id));
             }
+        });
+    }
+
+    getHomepage() {
+        this.adapter.getHomepage(json => {
+            json.error ? this.render() : this.app.renderHomepage(new Homepage(json.name, json.id))
         });
     }
 
@@ -123,8 +128,7 @@ class HomepageAuthenticator {
                 this.renderError(json.error);
             } else {
                 this.deRender();
-                this.app.renderHomepage(new Homepage(json.name, json.id, json.jwt));
-                document.cookie = `jwt=${json.jwt}`
+                this.app.renderHomepage(new Homepage(json.name, json.id));
             }
         });
     }

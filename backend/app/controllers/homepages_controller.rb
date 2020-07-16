@@ -4,7 +4,8 @@ class HomepagesController < ApplicationController
   def create
     homepage = Homepage.new(homepage_params)
     if homepage.save
-      render json: {id: homepage.id, name: homepage.name, jwt: JsonWebToken.encode({id: homepage.id}) }
+      cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true}
+      render json: {id: homepage.id, name: homepage.name}
     else
       if homepage.errors.keys.include?(:name);
         error = "Homepage Name is taken";
@@ -19,10 +20,15 @@ class HomepagesController < ApplicationController
     render json: {id: @homepage.id, name: @homepage.name}
   end
 
+  def logout
+    cookies.delete :jwt
+  end
+
   def authenticate
     homepage = Homepage.find_by(name: params[:name])
     if homepage && homepage.authenticate(params[:password])
-      render json: {id: homepage.id, name: homepage.name, jwt: JsonWebToken.encode({id: homepage.id}) }
+      cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true}
+      render json: {id: homepage.id, name: homepage.name}
     else
       render json: {error: 'homepage name or password incorrect'}, status: :unauthorized
     end

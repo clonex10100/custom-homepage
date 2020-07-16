@@ -1,8 +1,7 @@
 class Homepage {
-    constructor(name, id, jwt) {
+    constructor(name, id) {
         this.name = name;
         this.id = id;
-        this.jwt = jwt;
         this.adapter = HomepageAdapter
     }
 }

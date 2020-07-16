@@ -1,6 +1,7 @@
 class Form {
-    constructor(adapters) {
+    constructor(adapters, logoutCallback) {
         this.adapters = adapters;
+        this.logoutCallback = logoutCallback;
     }
     render() {
         this.div = this.getHTML()
@@ -38,8 +39,8 @@ class Form {
         let logoutButton = document.createElement('button');
         logoutButton.textContent = "Logout Of Homepage";
         logoutButton.onclick = e => {
-            document.cookie = "jwt= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-            window.location.reload(false);
+            this.adapters.homepage.logout();
+            this.logoutCallback();
         }
 
         div.appendChild(logoutButton);
@@ -59,6 +60,9 @@ class Form {
 
     getSortHTML() {
         let form = document.createElement('form');
+        let slot_div = document.createElement('div');
+        slot_div.style.overflow = "auto";
+
         for(let i = 0; i < Module.all.length; i++){
             let slot = document.createElement('div');
             slot.classList.add('slot')
@@ -88,12 +92,16 @@ class Form {
                 e.dataTransfer.setData('slot', e.target.parentNode.dataset.sortPriority);
             };
             slot.appendChild(p);
-            form.appendChild(slot);
+            slot.style.float = ("left")
+            slot_div.appendChild(slot);
 
         }
+        form.appendChild(slot_div);
+        form.appendChild(document.createElement('br'));
         let submit = document.createElement('input');
         submit.type = 'submit';
         form.appendChild(submit);
+
         form.addEventListener('submit', e => {
             e.preventDefault();
             destroyAllChildren(document.getElementById('module-container'));
@@ -117,10 +125,18 @@ class Form {
 
     getModuleHTML() {
         let form = document.createElement('form');
+        let name_field_label = document.createElement('label');
+        name_field_label.textContent = "Module Name: ";
+        form.appendChild(name_field_label);
         let nameField = document.createElement('input');
         nameField.type = 'text';
         nameField.classList.add('module-name-field');
         form.appendChild(nameField);
+        form.appendChild(document.createElement('br'));
+        let label = document.createElement('label');
+        label.textContent = "Module Type: ";
+        form.appendChild(label);
+        form.appendChild(document.createElement('br'));
         let radios = ['BookmarkContainer', 'Note'].map(type => {
             let label = document.createElement('label');
             label.textContent = type;
@@ -131,10 +147,12 @@ class Form {
             radio.value = type;
             radio.name = 'type';
             form.appendChild(radio);
+            form.appendChild(document.createElement('br'));
             return radio;
         });
         let submit = document.createElement('input');
         submit.type = 'submit'
+        submit.value = "Create Module"
         form.appendChild(submit);
         form.addEventListener('submit', e => {
             e.preventDefault()

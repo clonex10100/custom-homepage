@@ -1,4 +1,4 @@
-class NoteAdapter extends Adapter {
+class NoteAdapter extends ContentAdapter {
     updateNote(module, content, callback) {
         let options = this.options()
         options.method = "PATCH"
