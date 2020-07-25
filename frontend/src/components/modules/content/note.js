@@ -34,7 +34,7 @@ class Note extends Content {
 
     _derenderEdit() {
         this.div.querySelector('form').remove();
-        this.div.appendChild(this._HTML());
+        this.div.appendChild(this._HTML);
     }
 
 }
