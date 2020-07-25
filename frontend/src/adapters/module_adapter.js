@@ -37,6 +37,15 @@ class ModuleAdapter extends Adapter {
         );
     }
 
+    deleteModule(id, callback) {
+        let options = this.options()
+        options.method = "DELETE";
+        fetch(`${this.url}/${id}`, options)
+            .then(
+                callback()
+            );
+    }
+
     getContent(id, callback) {
         let options = this.options()
 

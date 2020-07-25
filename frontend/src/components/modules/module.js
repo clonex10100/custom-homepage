@@ -117,6 +117,16 @@ class Module {
         //change edit button to done editing button
         this.editButton.textContent = 'Finished Editing';
         this.editButton.onclick = this._finishEditing.bind(this);
+
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = "Delete Module";
+        deleteButton.classList.add("deleteButton");
+        deleteButton.onclick = this._delete.bind(this);
+        this.div.querySelector('footer').appendChild(deleteButton);
+    }
+
+    _delete(e) {
+        this.adapter.deleteModule(this.id, () => this.div.remove());
     }
 
     //Updates the module and its content
@@ -142,6 +152,8 @@ class Module {
     _derenderEdit() {
         this.div.querySelector('header').remove();
         this.div.prepend(this._headerHTML);
+
+        this.div.querySelector('.deleteButton').remove();
 
         this.editButton.textContent = 'Edit Module';
         this.editButton.onclick = this._renderEdit.bind(this);

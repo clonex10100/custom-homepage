@@ -25,6 +25,11 @@ class PageModulesController < ApplicationController
     end
   end
 
+  def destroy
+    mod = @homepage.page_modules.find(params[:id])
+    mod.destroy
+  end
+
   private
   def page_module_params
     params.require(:page_module).permit(:name, :sort_priority)

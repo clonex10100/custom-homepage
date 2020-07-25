@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  get '/home', to: redirect('/index.html')
+  get root to: redirect('/frontend/index.html')
   resource :homepage, only: [:create, :show] do
-    resources :page_modules, only: [:index, :create, :update] do
+    resources :page_modules, only: [:index, :create, :update, :destroy] do
       resource :content, only: [:show, :create, :update]
       resources :bookmarks, only: [:create, :destroy]
     end
-    post '/authenticate', to: 'homepages#authenticate'
+    post '/login', to: 'homepages#login'
     post '/logout', to: 'homepages#logout'
   end
 
