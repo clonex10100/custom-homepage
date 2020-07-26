@@ -20,7 +20,7 @@ class TodoItemAdapter extends Adapter {
             todo_item: { completed: !todo_item.completed }
         });
 
-        fetch(`${this.url}/page_modules/${todo_item.container.id}/todo_items/${todo_item.id}`, options)
+        fetch(`${this.url}/page_modules/${todo_item.container.module.id}/todo_items/${todo_item.id}`, options)
             .then(
                 resp => resp.json()
             ).then(
