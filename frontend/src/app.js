@@ -11,7 +11,8 @@ class App {
             module: new ModuleAdapter(),
             note: new NoteAdapter(),
             bookmark: new BookmarkAdapter(),
-            homepage: new HomepageAdapter()
+            homepage: new HomepageAdapter(),
+            todo_item: new TodoItemAdapter()
 
         }
 

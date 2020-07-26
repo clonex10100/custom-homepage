@@ -26,6 +26,9 @@ class Module {
             case 'Note':
                 this.content = new Note(this, this.adapters.note, json.id, json.content);
                 break;
+            case 'TodoList':
+                this.content = new TodoList(this, this.adapters.todo_item, json.id, json.todo_items);
+                break;
         }
         this.contentCreated = true;
     }
@@ -122,6 +125,7 @@ class Module {
         deleteButton.textContent = "Delete Module";
         deleteButton.classList.add("deleteButton");
         deleteButton.onclick = this._delete.bind(this);
+
         this.div.querySelector('footer').appendChild(deleteButton);
     }
 

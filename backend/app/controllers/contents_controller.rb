@@ -2,10 +2,12 @@ class ContentsController < ApplicationController
   def show
     page_module = @homepage.page_modules.find(params[:page_module_id])
     render json: case page_module.content_type
-    when "BookmarkContainer"
+    when 'BookmarkContainer'
       BookmarkContainerSerializer.json(page_module.content)
-    when "Note"
+    when 'Note'
       NoteSerializer.json(page_module.content)
+    when 'TodoList'
+      TodoListSerializer.json(page_module.content)
     end
   end
 
@@ -13,7 +15,6 @@ class ContentsController < ApplicationController
     page_module = @homepage.page_modules.find(params[:page_module_id])
     render json: case page_module.content_type
     when "Note"
-      puts note_params
       page_module.content.update(note_params)
       NoteSerializer.json(page_module.content)
     end

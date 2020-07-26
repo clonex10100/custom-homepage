@@ -11,6 +11,8 @@ class PageModulesController < ApplicationController
         BookmarkContainer.new
       when 'Note'
         Note.new
+      when 'TodoList'
+        TodoList.new
     end
     mod.save
     render json: PageModuleSerializer.json(mod)

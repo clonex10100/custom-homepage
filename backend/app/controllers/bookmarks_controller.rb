@@ -8,7 +8,7 @@ class BookmarksController < ApplicationController
     end
   end
 
-  def destroy 
+  def destroy
     mod = @homepage.page_modules.find(params[:page_module_id])
     if mod.content_type == "BookmarkContainer"
       bookmark = Bookmark.find(params[:id]).delete

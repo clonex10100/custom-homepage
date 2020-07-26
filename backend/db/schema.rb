@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_07_222439) do
+ActiveRecord::Schema.define(version: 2020_07_26_014440) do
 
   create_table "bookmark_containers", force: :cascade do |t|
   end
@@ -43,6 +43,17 @@ ActiveRecord::Schema.define(version: 2020_03_07_222439) do
     t.index ["homepage_id"], name: "index_page_modules_on_homepage_id"
   end
 
+  create_table "todo_items", force: :cascade do |t|
+    t.string "content"
+    t.boolean "completed"
+    t.integer "todo_list_id", null: false
+    t.index ["todo_list_id"], name: "index_todo_items_on_todo_list_id"
+  end
+
+  create_table "todo_lists", force: :cascade do |t|
+  end
+
   add_foreign_key "bookmarks", "bookmark_containers"
   add_foreign_key "page_modules", "homepages"
+  add_foreign_key "todo_items", "todo_lists"
 end

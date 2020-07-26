@@ -36,11 +36,10 @@ class HomepageAuthAdapter extends Adapter {
 
     getHomepage(callback) {
         let options = this.options();
-        console.log(this.url);
 
         fetch(this.url, options)
             .then(
-                resp => {console.log(resp); return resp.json()}
+                resp => resp.json()
             ).then(
                 json => callback(json)
             );

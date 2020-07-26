@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :page_modules, only: [:index, :create, :update, :destroy] do
       resource :content, only: [:show, :create, :update]
       resources :bookmarks, only: [:create, :destroy]
+      resources :todo_items, only: [:create, :update, :destroy]
     end
     post '/login', to: 'homepages#login'
     post '/logout', to: 'homepages#logout'

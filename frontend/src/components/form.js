@@ -136,7 +136,7 @@ class Form {
         label.textContent = "Module Type: ";
         form.appendChild(label);
         form.appendChild(document.createElement('br'));
-        let radios = ['BookmarkContainer', 'Note'].map(type => {
+        let radios = ['BookmarkContainer', 'Note', 'TodoList'].map(type => {
             let label = document.createElement('label');
             label.textContent = type;
             form.appendChild(label);
@@ -162,6 +162,7 @@ class Form {
                 type: type
             },
             json => {
+                console.log(json)
                 let module = new Module(json.name, this.adapters, json.id, json.content_type)
                 module.render();
                 this.reRenderButtons();

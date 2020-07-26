@@ -12,9 +12,7 @@ class BookmarkContainer extends Content {
 
     render() {
         super.render()
-        for(let bookmark of this.bookmarks) {
-            bookmark.render();
-        }
+        this.bookmarks.forEach(bookmark => bookmark.render());
     }
 
     renderEdit() {
@@ -65,7 +63,7 @@ class BookmarkContainer extends Content {
             e.preventDefault();
 
             //create and save the bookmark to database
-            this.adapter.postBookmark(this, {name: bookmarkNameField.value, url: bookmarkURLField.value}, json => {
+            this.adapter.postBookmark(this.module.id, {name: bookmarkNameField.value, url: bookmarkURLField.value}, json => {
                 let bookmark = new Bookmark(this, this.adapter, json.id, json.name, json.url);
                 bookmark.render();
                 bookmark.renderEdit();
