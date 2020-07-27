@@ -11,6 +11,7 @@ class TodoItem {
         let li = document.createElement('li');
         li.dataset.id = this.id;
         li.textContent = this.content;
+        li.classList.add('todo-item');
 
         let checkbox = document.createElement('input');
         checkbox.type = 'checkbox';

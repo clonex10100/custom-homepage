@@ -56,7 +56,7 @@ class TodoList extends Content {
             let todo_item;
             this.adapter.postTodoItem(this.module.id, {content: input.value, completed: false}, json => {
                 console.log(json);
-                todo_item = new TodoItem(this, this.adapter, json); 
+                todo_item = new TodoItem(this, this.adapter, json);
                 this.todo_items.push(todo_item);
                 todo_item.render();
                 todo_item.renderEdit();
