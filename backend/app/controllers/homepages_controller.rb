@@ -4,7 +4,7 @@ class HomepagesController < ApplicationController
   def create
     homepage = Homepage.new(homepage_params)
     if homepage.save
-      cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true}
+      set_jwt(homepage)
       render json: {id: homepage.id, name: homepage.name}
     else
       if homepage.errors.keys.include?(:name);
@@ -27,7 +27,7 @@ class HomepagesController < ApplicationController
   def login
     homepage = Homepage.find_by(name: params[:name])
     if homepage && homepage.authenticate(params[:password])
-      cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true}
+      set_jwt(homepage)
       render json: {id: homepage.id, name: homepage.name}
     else
       render json: {error: 'homepage name or password incorrect'}, status: :unauthorized
@@ -37,5 +37,9 @@ class HomepagesController < ApplicationController
   private
   def homepage_params
     params.require(:homepage).permit(:name, :password, :password_confirmation)
+  end
+
+  def set_jwt(homepage)
+      cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true, samesite: 'Strict'}
   end
 end
