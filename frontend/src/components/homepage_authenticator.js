@@ -3,6 +3,7 @@ class HomepageAuthenticator {
         this.adapter = new HomepageAuthAdapter();
         //callback to render homepage on authentication
         this.renderHomepageCallback = renderCallback;
+        this.authenticating = false;
     }
 
     authenticate() {
@@ -13,25 +14,39 @@ class HomepageAuthenticator {
     }
 
     _login(e) {
-        e.preventDefault();
-        let name = e.target.querySelector('#loginName').value;
-        let password = e.target.querySelector('#loginPassword').value;
+        if (!this.authenticating) {
+            e.preventDefault();
 
-        this.adapter.login(name, password, this._authCallback);
+            this.authenticating = true;
+
+            let name = e.target.querySelector('#loginName').value;
+            let password = e.target.querySelector('#loginPassword').value;
+
+            this.adapter.login(name, password, this._authCallback);
+        }
+        else {
+            console.log('DENIED!');
+        }
     }
 
     _create(e) {
-        e.preventDefault();
-        let name = e.target.querySelector('#createName').value;
-        let password = e.target.querySelector('#createPassword').value;
-        let password_conf = e.target.querySelector('#createPasswordConf').value;
+        if (!this.authenticating) {
+            e.preventDefault();
 
-        this.adapter.create(name, password, password_conf, this._authCallback);
+            this.authenticating = true;
+
+            let name = e.target.querySelector('#createName').value;
+            let password = e.target.querySelector('#createPassword').value;
+            let password_conf = e.target.querySelector('#createPasswordConf').value;
+
+            this.adapter.create(name, password, password_conf, this._authCallback);
+        }
     }
 
     _authCallback = json => {
         if(json.error) {
             this._renderError(json.error);
+            this.authenticating = false;
         } else {
             this._deRender();
             this.renderHomepageCallback();
