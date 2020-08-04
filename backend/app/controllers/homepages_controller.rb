@@ -40,6 +40,6 @@ class HomepagesController < ApplicationController
   end
 
   def set_jwt(homepage)
-      cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true, samesite: 'Strict'}
+      cookies.signed[:jwt] = {value: JsonWebToken.encode({id: homepage.id}), httponly: true, secure: true}
   end
 end
